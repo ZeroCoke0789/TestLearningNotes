@@ -1055,8 +1055,8 @@ body .markdown-body
 .codehilite .vi{color:teal}
 .codehilite .il{color:#009999}
 .codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><title>Appium安装_04_Windows平台appium-server安装</title></head><body><article class="markdown-body"><h1 id="appium-windowsappium-server">Appium安装-Windows平台Appium Server安装<a class="headerlink" href="#appium-windowsappium-server" title="Permanent link"></a></h1>
-<p>介绍如何使用npm安装appium服务，以及如何运行被测应用。  </p>
+</style><title>Appium安装_05_Windows平台appium-server源码安装</title></head><body><article class="markdown-body"><h1 id="appium-windowsappium-server">Appium安装-Windows平台Appium Server安装<a class="headerlink" href="#appium-windowsappium-server" title="Permanent link"></a></h1>
+<p>介绍若使用从appium官网下载的source-zip包如何安装appium服务，以及如何运行被测应用。  </p>
 <p>注意事项：<br />
 1. 因Windows平台不支持iOS端自动化，因此以下只介绍Android端Appium的安装。<br />
 2. Appium服务依赖于Android开发环境，但此介绍未讲解Android开发环境如何安装，请自行百度安装后，再来安装Appium。</p>
@@ -1064,175 +1064,28 @@ body .markdown-body
 <div class="toc">
 <ul>
 <li><a href="#appium-windowsappium-server">Appium安装-Windows平台Appium Server安装</a><ul>
-<li><a href="#appium-server">一、Appium Server的安装：</a><ul>
-<li><a href="#1nodenpm">1.安装node和npm：</a></li>
-<li><a href="#2npmappium">2.npm安装appium：</a></li>
-<li><a href="#3npmappium-client">3.npm安装appium client：</a></li>
-<li><a href="#4npmappium-doctor">4.npm安装appium-doctor：</a></li>
-<li><a href="#5appium">5.检验appium环境：</a></li>
-<li><a href="#6appium">6.检验appium运行正常：</a></li>
-<li><a href="#7">7.安装时问题处理记录：</a></li>
-</ul>
-</li>
-<li><a href="#appium-android">二、Appium-Android端驱动安装：</a><ul>
-<li><a href="#1appium-android-driver">1.安装appium-android-driver:</a></li>
-<li><a href="#2appium-chromedriverchromedriver">2.安装appium-chromedriver(建议指定chromedriver镜像安装):</a></li>
-<li><a href="#3chromedriverappium-chromedriver">3.安装指定chromedriver版本的appium-chromedriver：</a></li>
-</ul>
-</li>
-<li><a href="#androidappium">三、Android端Appium环境运行测试：</a><ul>
-<li><a href="#1android">1.找一个Android测试机并设置好：</a></li>
-<li><a href="#2app">2.找一个被测app:</a></li>
-<li><a href="#3">3.获取启动参数。</a><ul>
-<li><a href="#31-apkapppackageapk32">3.1 根据apk获取app对应的package名(有apk时可用，没有见3.2)：</a></li>
-<li><a href="#32-adb-logcatappactivity">3.2 利用adb logcat查询app的启动activity名：</a></li>
-</ul>
-</li>
-<li><a href="#4appium">4.启动appium服务：</a></li>
-<li><a href="#5app">5.运行测试脚本，启动被测App，开始测试：</a></li>
-</ul>
-</li>
+<li><a href="#appium">一、Appium源码安装：</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <hr />
-<h2 id="appium-server">一、Appium Server的安装：<a class="headerlink" href="#appium-server" title="Permanent link"></a></h2>
-<h5 id="1nodenpm">1.安装node和npm：<a class="headerlink" href="#1nodenpm" title="Permanent link"></a></h5>
-<p>见“一、准备工作”。  </p>
-<h5 id="2npmappium">2.npm安装appium：<a class="headerlink" href="#2npmappium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>`npm install -g appium --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="3npmappium-client">3.npm安装appium client：<a class="headerlink" href="#3npmappium-client" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>`npm install wd --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="4npmappium-doctor">4.npm安装appium-doctor：<a class="headerlink" href="#4npmappium-doctor" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>`npm install -g appium-doctor --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="5appium">5.检验appium环境：<a class="headerlink" href="#5appium" title="Permanent link"></a></h5>
-<p>输入<code>appium-doctor</code>，验证appium环境是不是已配好、是否有问题。  </p>
-<h5 id="6appium">6.检验appium运行正常：<a class="headerlink" href="#6appium" title="Permanent link"></a></h5>
-<p>输入<code>appium -v</code>，运行appium验证是否运行正常。  </p>
-<h5 id="7">7.安装时问题处理记录：<a class="headerlink" href="#7" title="Permanent link"></a></h5>
-<ul>
-<li>
-<p>运行”npm install -g appium“时下载appium-chromedriver超时(下载不下来)：<br />
-【问题显示：】<br />
-npm ERR! appium-chromedriver@3.1.4 install: <code>node install-npm.js</code><br />
-info Chromedriver Install Downloading <a href="https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip">https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip</a>&hellip;<br />
-RequestError: Error: connect ETIMEDOUT 172.217.160.112:443<br />
-&hellip;<br />
-npm ERR! code ELIFECYCLE<br />
-npm ERR! errno 1<br />
-npm ERR! appium-chromedriver@3.1.4 install: <code>node install-npm.js</code><br />
-npm ERR! Exit status 1<br />
-npm ERR!<br />
-npm ERR! Failed at the appium-chromedriver@3.1.4 install script.<br />
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.<br />
-【对策：】<br />
-使用appium源码安装，或添加&ndash;chromedriver_cdnurl参数再运行安装：<br />
-<code>--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver</code></p>
-</li>
-<li>
-<p>下载 UiAutomator2 Server test APK v0.3.0 超时：<br />
-【问题显示：】<br />
-info UiAutomator2 downloading UiAutomator2 Server test APK v0.3.0 :   <a href="https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk">https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk</a><br />
-【对策：】<br />
-手动下载：记录下载链接和本地存放目录，直接翻墙去下载链接下载对应apk包，再放入本地存放目录即可。  </p>
-</li>
-</ul>
+<h2 id="appium">一、Appium源码安装：<a class="headerlink" href="#appium" title="Permanent link"></a></h2>
+<p>（参考 <a href="https://testerhome.com/topics/5874">https://testerhome.com/topics/5874</a> 文章）
+1.安装cnpm：npm install -g cnpm &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+2.官网下载最新appium版本源码：
+<a href="https://github.com/appium/appium-desktop/releases/latest">https://github.com/appium/appium-desktop/releases/latest</a>
+3.将下载的zip源码解压，放到想放的地方。
+4.cd进入appium源码目录，执行“cnpm install”安装node依赖。
+5.输入“cnpm link”，将appium link到系统。
+6.npm安装appium client：npm install wd
+7.npm安装appium-doctor：npm install -g appium-doctor
+8.输入“appium-doctor”，查看appium环境是不是配好了。
+9.输入“appium -v”，测试一下appium是否安好了。</p>
+<p>下载不下来时两必备参数：
+Appium Install：
+    &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+Chromedriver Install：
+    &ndash;chromedriver_cdnurl=<a href="http://cdn.npm.taobao.org/dist/chromedriver">http://cdn.npm.taobao.org/dist/chromedriver</a></p>
 <hr />
-<h2 id="appium-android">二、Appium-Android端驱动安装：<a class="headerlink" href="#appium-android" title="Permanent link"></a></h2>
-<ul>
-<li><a href="http://appium.io/docs/en/drivers/android-uiautomator2/">The UiAutomator2 Driver for Android</a> </li>
-<li><a href="http://appium.io/docs/en/drivers/android-uiautomator/">The UiAutomator Driver for Android</a> </li>
-<li><a href="http://appium.io/docs/en/drivers/android-selendroid/">The Selendroid Driver for Android</a></li>
-</ul>
-<h5 id="1appium-android-driver">1.安装appium-android-driver:<a class="headerlink" href="#1appium-android-driver" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>npm install appium-android-driver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
-</pre></div>
-
-
-<h5 id="2appium-chromedriverchromedriver">2.安装appium-chromedriver(建议指定chromedriver镜像安装):<a class="headerlink" href="#2appium-chromedriverchromedriver" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>npm install appium-chromedriver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
-</pre></div>
-
-
-<h5 id="3chromedriverappium-chromedriver">3.安装指定chromedriver版本的appium-chromedriver：<a class="headerlink" href="#3chromedriverappium-chromedriver" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>npm install appium-chromedriver --chromedriver_version=&quot;2.16&quot;   --chromedriver_cdnurl=http://npm.taobao.org/mirrors/chromedriver
-</pre></div>
-
-
-<hr />
-<h2 id="androidappium">三、Android端Appium环境运行测试：<a class="headerlink" href="#androidappium" title="Permanent link"></a></h2>
-<h5 id="1android">1.找一个Android测试机并设置好：<a class="headerlink" href="#1android" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>找个Android测试机，打开“开发者选项”和“USB调试”，配置adb运行环境，确保adb服务可运行。
-</pre></div>
-
-
-<h5 id="2app">2.找一个被测app:<a class="headerlink" href="#2app" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>找个apk包或将app直接安装在测试机上都行。
-</pre></div>
-
-
-<h5 id="3">3.获取启动参数。<a class="headerlink" href="#3" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>appium启动测试应用时，需要指定启动参数，如下：
-
-未安装app需要： 
-    platformName/platformVersion/deviceName/app，4个参数
-已安装app时需要： 
-    platformName/platformVersion/deviceName/appPackage/appActivity，5个参数
-
-参数说明：
-platformName：平台名称，Android还是iOS，必填；
-platformVersion：平台系统版本，如Android 5.0，必填。直接手机设置里查询就行。
-deviceName：设备名称，随便取，但必填。
-app：apk包的存放路径。
-appPackage：被测app的package名，获取方法见3.1或3.2。
-appActivity：被测app的启动activity名，获取方法见3.2。
-</pre></div>
-
-
-<p><a href="#Appium安装_03_Windows平台appium-desktop安装.md">xxx</a></p>
-<h6 id="31-apkapppackageapk32">3.1 根据apk获取app对应的package名(有apk时可用，没有见3.2)：<a class="headerlink" href="#31-apkapppackageapk32" title="Permanent link"></a></h6>
-<p><div class="codehilite"><pre><span class="c1">## 输出apk对应的package名</span>
-<span class="nv">apk_name</span><span class="o">=</span>xxx.apk <span class="o">&amp;&amp;</span>
-<span class="k">if</span> <span class="o">[</span> ! -f <span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span><span class="s2">&quot;/</span><span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span><span class="s2">文件不存在，请检查路径是否正确。&quot;</span>
-<span class="k">else</span>
-    <span class="nv">pkg_name</span><span class="o">=</span><span class="sb">`</span>aapt dump badging <span class="s2">&quot;./</span><span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span> grep package <span class="se">\</span>
-    <span class="p">|</span> grep -o <span class="s2">&quot;name=&#39;[^&#39;]*&quot;</span> <span class="p">|</span> awk -F<span class="s2">&quot;&#39;&quot;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$pkg_name</span>
-<span class="k">fi</span>
-</pre></div>
-<code>示例：钉钉appPackage=com.alibaba.android.rimet</code></p>
-<h6 id="32-adb-logcatappactivity">3.2 利用adb logcat查询app的启动activity名：<a class="headerlink" href="#32-adb-logcatappactivity" title="Permanent link"></a></h6>
-<p><div class="codehilite"><pre>adb logcat <span class="p">|</span> grep <span class="s2">&quot;Displayed&quot;</span>
-</pre></div>
-输入上面命令，再启动app，出现的第1个相同package的activity，即为启动activity名。<br />
-<code>示例：钉钉appActivity=.biz.LaunchHomeActivity</code></p>
-<h5 id="4appium">4.启动appium服务：<a class="headerlink" href="#4appium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>打开cmd，然后输入appium，启动appium服务即可。
-</pre></div>
-
-
-<h5 id="5app">5.运行测试脚本，启动被测App，开始测试：<a class="headerlink" href="#5app" title="Permanent link"></a></h5>
-<p><div class="codehilite"><pre><span class="p">{</span>
-  <span class="nt">&quot;platformName&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;platformVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;7.0&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;deviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;Samsung S6&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;appPackage&quot;</span><span class="p">:</span> <span class="s2">&quot;com.alibaba.android.rimet&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;appActivity&quot;</span><span class="p">:</span> <span class="s2">&quot;.biz.LaunchHomeActivity&quot;</span>
-<span class="p">}</span>
-</pre></div>
-在Automatic Server页下Desired Capabilities列表输入以下参数，然后点“Start Seesion”即可。</p>
-<p>其他常用参数：<br />
-unicodeKeyboard：启动unicode键盘，true or false，默认false。开启后支持中文。<br />
-resetKeyboard：使用unicodeKeyboard功能运行Unicode测试后，将键盘重置为原来的状态。单独使用时忽略。true or false，默认false。开启后支持中文。<br />
-noReset：是否不重置应用程序状态，true or false，默认true。  </p>
-<p><a href="https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/caps.md">Appium Desired Capabilities介绍</a></p></article></body></html>
+<p>待完善</p></article></body></html>
