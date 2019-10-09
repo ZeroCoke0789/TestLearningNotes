@@ -28,6 +28,7 @@ function adbConnect() {
 # 处理for循环不按整行输出的问题
 IFS_old=$IFS
 IFS=$'\n'
+
 # 设定adb连接端口
 tcpip_port=5037
 
@@ -79,6 +80,6 @@ else
 fi
 
 echo "脚本运行结束"
-read -p "Press any key to over."
+read -n 1 -p "Press any key to over."
 IFS=$IFS_old
 exit
