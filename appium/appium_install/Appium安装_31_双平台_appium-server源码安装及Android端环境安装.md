@@ -1,10 +1,9 @@
-# Appium安装-Windows平台Appium Server安装
+# Appium安装_31_双平台_appium-server源码安装及Android端环境安装
 
-介绍若使用从appium官网下载的source-zip包如何安装appium服务，以及如何运行被测应用。  
-
-注意事项：  
-1. 因Windows平台不支持iOS端自动化，因此以下只介绍Android端Appium的安装。  
-2. Appium服务依赖于Android开发环境，但此介绍未讲解Android开发环境如何安装，请自行百度安装后，再来安装Appium。
+介绍在Windows电脑或Mac电脑上，若想通过源码安装appium-server并用其进行自动化测试，在对Android端的安装及运行测试的过程。  
+注意：  
+1.因非Mac系统不能进行iOS端自动化测试，因此Windows平台上只能进行Android端测试。  
+2.此介绍只讲解Appium的安装过程，关于npm、adb等依赖不做介绍，想装请见《安装准备》文档。
 
 ---
 

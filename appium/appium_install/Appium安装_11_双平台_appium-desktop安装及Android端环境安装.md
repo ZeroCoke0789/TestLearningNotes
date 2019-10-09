@@ -1,10 +1,9 @@
-# Appium安装-Windows平台Appium-desktop安装
+# Appium安装_11_双平台_appium-desktop安装及Android端环境安装
 
-介绍如何安装Appium-desktop，并运行被测应用。  
-
-注意事项：  
-1. 因Windows平台不支持iOS端自动化，因此以下只介绍Android端Appium的安装。  
-2. Appium服务依赖于Android开发环境，但此介绍未讲解Android开发环境如何安装，请自行百度安装后，再来安装Appium。
+介绍在Windows电脑或Mac电脑上，若想使用appium-desktop进行自动化测试，在对Android端的安装及运行测试的过程。  
+注意：  
+1.因非Mac系统不能进行iOS端自动化测试，因此Windows平台上只能进行Android端测试。  
+2.此介绍只讲解Appium的安装过程，关于npm、adb等依赖不做介绍，想装请见《安装准备》文档。
 
 ---
 
@@ -74,7 +73,7 @@ adb logcat | grep "Displayed"
   "appActivity": ".biz.LaunchHomeActivity"
 }
 ```
-在Automatic Server页下Desired Capabilities列表输入以下参数，然后点“Start Seesion”即可。
+在Automatic Server页的Desired Capabilities列表输入以下参数，然后点“Start Seesion”即可。
 
 其他常用参数：  
 unicodeKeyboard：启动unicode键盘，true or false，默认false。开启后支持中文。  

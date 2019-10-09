@@ -1,6 +1,8 @@
-# Appium安装-Windows平台安装准备
+# Appium安装_03_Mac平台_安装准备_iOS端.md
 
-安装JDK和node
+安装JDK、nodejs、Xcode、iOS开发环境
+
+---
 
 [TOC]
 

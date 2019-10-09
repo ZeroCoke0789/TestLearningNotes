@@ -1,6 +1,8 @@
-# Appium安装-Windows平台安装准备
+# Appium安装_02_Mac平台_安装准备_Android端
 
-安装JDK和node
+安装JDK、nodejs、Android开发环境
+
+---
 
 [TOC]
 
@@ -11,12 +13,24 @@
 百度即可，略
 
 环境变量：  
-JAVA_HOME=JDK安装目录  
-CLASSPATH=".;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar"  
+export JAVA_HOME=JDK安装目录  
+export CLASSPATH=".:%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar" 
 
 ---
 
-## 二、安装node，并配置npm
+## 二、更新Homebrew（brew命令）
+
+因Mac自带Homebrew，因此只要更新即可，执行`brew update`即可。
+
+#### brew的更新及命令介绍：  
+1. `brew update`：更新brew  
+2. `brew install xxx`：安装xxx模块  
+3. `brew uninstall xxx`：卸载xxx模块  
+4. `brew upgrade xxx`：更新xxx模块版本    
+
+---
+
+## 三、安装node，并配置npm
 
 1. 官网下载node并安装：  
     从[nodejs官网](https://nodejs.org/en/)下载node，然后安装，即可获得node和npm。
@@ -52,3 +66,8 @@ CLASSPATH=".;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar"
     cnpm安装模块：`cnpm install [name]`
 
 
+
+# 其他：
+
+idb and idb-companion:
+ https://swift.ctolib.com/facebook-idb.html

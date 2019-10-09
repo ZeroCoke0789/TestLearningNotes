@@ -1,66 +1,23 @@
+# Appium安装_12_Mac平台_appium-desktop安装及iOS端环境安装
+
+介绍在Mac电脑上，若想使用appium-desktop进行自动化测试，对iOS端安装并运行测试的过程。  
+注意：  
+1.此介绍只讲解Appium的安装过程，关于brew、npm等依赖不做介绍，想装请见《安装准备》文档。
+
+---
+
 [TOC]
 
 ---
 
-## 二、Appium Server的安装：
+## 一、Appium-desktop的安装：
 
-##### 1.安装node和npm：
-见“一、准备工作”。  
-##### 2.npm安装appium： 
-    `npm install -g appium --registry=https://registry.npm.taobao.org`
-##### 3.npm安装appium client：
-    `npm install wd --registry=https://registry.npm.taobao.org` 
-##### 4.npm安装appium-doctor：
-    `npm install -g appium-doctor --registry=https://registry.npm.taobao.org`
-##### 5.检验appium环境：
-输入`appium-doctor`，验证appium环境是不是已配好、是否有问题。  
-##### 6.检验appium运行正常：
-输入`appium -v`，运行appium验证是否运行正常。  
-##### 7.安装时问题处理记录：  
-* 运行”npm install -g appium“时下载appium-chromedriver超时(下载不下来)：  
-【问题显示：】  
-npm ERR! appium-chromedriver@3.1.4 install: `node install-npm.js`  
-info Chromedriver Install Downloading https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip...  
-RequestError: Error: connect ETIMEDOUT 172.217.160.112:443  
-...  
-npm ERR! code ELIFECYCLE  
-npm ERR! errno 1  
-npm ERR! appium-chromedriver@3.1.4 install: `node install-npm.js`  
-npm ERR! Exit status 1  
-npm ERR!  
-npm ERR! Failed at the appium-chromedriver@3.1.4 install script.  
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.  
-【对策：】  
-使用appium源码安装，或添加--chromedriver_cdnurl参数再运行安装：  
-`--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver`
+    https://github.com/appium/appium-desktop/releases/
+    打开上面链接，下载最新的appium-desktop安装包，然后按要求一步步安装即可。
 
-* 下载 UiAutomator2 Server test APK v0.3.0 超时：  
-【问题显示：】  
-info UiAutomator2 downloading UiAutomator2 Server test APK v0.3.0 :   https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk  
-【对策：】  
-手动下载：记录下载链接和本地存放目录，直接翻墙去下载链接下载对应apk包，再放入本地存放目录即可。  
+## 二、iOS端Appium环境运行测试：
 
-
-============================================================
-
-## 三、Appium-Android端驱动安装：
-
-* [The UiAutomator2 Driver for Android](http://appium.io/docs/en/drivers/android-uiautomator2/) 
-* [The UiAutomator Driver for Android](http://appium.io/docs/en/drivers/android-uiautomator/) 
-* [The Selendroid Driver for Android](http://appium.io/docs/en/drivers/android-selendroid/)
-
----
-
-##### 1.安装appium-android-driver:   
-    npm install appium-android-driver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver 
-##### 2.安装appium-chromedriver(建议指定chromedriver镜像安装):  
-    npm install appium-chromedriver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
-##### 3.安装指定chromedriver版本的appium-chromedriver：
-    npm install appium-chromedriver --chromedriver_version="2.16"   --chromedriver_cdnurl=http://npm.taobao.org/mirrors/chromedriver
-
-
-
-
+（以下略，还未修改完）
 ============================================================
 
 ## 四、Appium-iOS端驱动安装： 
@@ -239,3 +196,48 @@ cd进入：
 ##### 4.2.3.3 Install [AppleSimulatorUtils](https://github.com/wix/AppleSimulatorUtils) to use the [permissions capability](https://github.com/appium/appium-xcuitest-driver#desired-capabilities).
 
 ---
+
+
+============================================================
+
+## 五、运行测试：
+
+### 5.1 Simulator Running（忽略）。
+
+### 5.2 Real Device Running: 
+
+#### 5.2.1.Native App:
+1.激活手机“开发者选项”：  
+    插上手机，随便build一个项目（如WebDriverAgent），即可激活。  
+2.Test运行WebDriverAgent应用，让手机上安装上该应用。  
+3.配置Desired Capabilities：  
+3.1 查询真机udid：  
+    idevice_id -l  
+    (自己6s的udid：eebf7f211d670fc1feb34b20c30a1b07581b18a2)  
+3.2 查看手机上所有安装了的应用的bundleId：  
+    ideviceinstaller -l  
+    (微信Bundle ID：com.tencent.xin)  
+3.3 查看XcodeOrgId和XcodeSigningId(不必要，若报错则需要添加)：  
+    打开Xcode-》General标签页-》Signing-》Signing  Cerificate-》鼠标hover查看XcodeOrgId全称  
+    (我的"XcodeOrgId": "K3YBJJ6H2L"和"XcodeSigningId": "iPhone Developer")  
+启动微信的示例json串如下：  
+{  
+  "platformName": "ios",  
+  "deviceName": "iPhone 6S",  
+  "automationName": "XCuiTest",  
+  "platformVersion": "10.3.3",  
+  "udid": "eebf7f211d670fc1feb34b20c30a1b07581b18a2",  
+  "bundleId": "com.che168.AutoTraderCloud"  
+}  
+4 点击Start Session运行  
+5.可通过Appium-Inspector工具抓元素坐标  
+
+#### 5.2.2 Hybrid App
+1.将电脑的Safari配置出“开发者选项”，并勾选“允许远程自动化”：  
+网上教程：https://jingyan.baidu.com/article/9faa72318dfca5473d28cb61.html  
+2.同上Native App安装步骤。  
+3.若遇到H5内嵌页面，可使用电脑Safari确定元素坐标：  
+    Safari菜单--》“开发”--》“任羿 的 iPhone 6S”--》选对应的网页地址  
+
+
+
