@@ -1,0 +1,30 @@
+{
+    "result": [
+        {
+            "id": 1,
+            "authorityid": 1,
+            "authoritycode": "001",
+            "authorityname": "车源管理",
+            "parentcode": "",
+            "authorityguid": "D677182098A64CC59B5C2A2B924883DE"
+        },
+        {
+            "id": 3,
+            "authorityid": 3,
+            "authoritycode": "001002",
+            "authorityname": "我的车源",
+            "parentcode": "001",
+            "authorityguid": "4D7ED5B67B8741D8BAEAE05EDCDB6AFD"
+        },
+        {
+            "id": 281,
+            "authorityid": 281,
+            "authoritycode": "6344D185388D4C3DA47C9F4451018F5D",
+            "authorityname": "双11活动",
+            "parentcode": "EF7E4DDDD9A84B88941CF32805197EBD",
+            "authorityguid": "E87DD6E1C786467697D18C947EAE3272"
+        }
+    ],
+    "returncode": 0,
+    "message": "success"
+}

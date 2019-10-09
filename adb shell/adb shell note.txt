@@ -1,0 +1,88 @@
+device_list=`adb devices | awk '{if(NR>1 && $0!~"^$") print $0}'` && 
+num=`echo "$device_list" | awk '{if($0!~"^$") print $0}' | wc -l` &&
+if [ $num -eq 0 ]; then
+    echo "当前没有连接中的设备"
+elif [ $num -ge 2 ]; then
+    echo "当前连接中设备有2个以上，将开始解除链接"
+    adb disconnect
+else
+    echo "OK，当前只连接了1个设备"
+    echo "$device_list"
+fi
+
+sdk_num=`adb shell getprop ro.build.version.sdk` &&
+if [ $sdk_num -eq 19 ]; then
+    ip=`adb shell netcfg 2>/dev/null | grep wlan0 | awk '{print $3}' | awk -F"/" '{print $1}'`
+else
+    ip=`adb shell ifconfig eth0 2>/dev/null || adb shell ifconfig wlan0 2>/dev/null \
+    | grep -oE "(inet addr:)[^ ]+" | awk -F":" '{print $2}' | sed 's/ //g'`
+fi &&
+adb tcpip 5555 && 
+adb connect $ip
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+
+apk_name=AutoTraderCloud_csy.apk &&
+if [ ! -f ${apk_name} ]; then
+    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
+else
+    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
+    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
+    adb uninstall ${pkg_name} | adb install -r ${apk_name}
+fi
+
+apk_name=AutoTraderCloud_csy.apk &&
+if [ ! -f ${apk_name} ]; then
+    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
+else
+    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
+    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
+    adb uninstall ${pkg_name} \
+    | adb push ${apk_name} //sdcard/${apk_name}
+fi
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+
+查看某接口列表字段		[^,]*,   [^}]*}
+curl 'xxx_http_url' | awk 'BEGIN{ RS="{" }{print $0}' | grep -o "fastpublic\"[^,]*"
+
+pic_path="//sdcard/`date +%Y-%m-%d_%k%M%S`.png" && adb shell screencap -p ${pic_path} && adb pull ${pic_path} ./ && adb shell rm ${pic_path}
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+
+adb shell am start -a android.intent.action.MAIN  -n com.android.settings/.wifi.WifiSettings
+
+adb shell rm -r "//sdcard/车智赢+" \
+| adb shell rm -r "//sdcard/车智赢+小视频"
+
+adb shell am start -W com.che168.autotradercloud/.launch.LaunchActivity -S
+adb shell pm clear com.che168.autotradercloud
+adb shell am force-stop com.che168.autotradercloud
+
+
+adb shell pm install //sdcard/${apk_name} 
+for %i in (*.apk) do adb install %i
+
+echo 系统版本:`adb shell getprop ro.build.version.release`
+
+adb logcat | awk '{if($0!~"^$") print $0}'  >> log1.txt
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+
+adb shell am start -a android.intent.action.VIEW -d http://athm.cn/h64utbc
+http://athm.cn/G2TkBZb
+
+adb pull //sdcard/DCIM/Camera ./ \
+| adb pull //sdcard/DCIM/Screenshots ./ \
+| adb pull //sdcard/pictures/Screenshots ./ \
+| adb pull //sdcard/pictures/Camera ./
+
+adb shell rm //sdcard/DCIM/Screenshots/*
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+
+adb shell monkey -p com.che168.autotradercloud --pct-touch 40 --pct-motion 25 --pct-appswitch 10 --pct-rotation 5 -s 6666 --throttle 400 --ignore-crashes --ignore-timeouts -v 500000
+
+com.che168.autotradercloud/.launch.LaunchActivity: +187ms
+
+aapt dump badging ./AutoTraderCloud_csy.apk AndroidManifest.xml

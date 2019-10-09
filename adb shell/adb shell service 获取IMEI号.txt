@@ -1,0 +1,26 @@
+基础命令：
+adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}'
+
+
+
+实现1：通过变量获得所求：
+var2=`adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}'`
+echo ${var2//./}
+
+说明：
+1.变量赋值：var1=$(adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}')
+
+
+
+实现2：一行命令获取：
+adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}' | xargs | sed 's/\.//g' | sed 's/\ //g'
+
+后缀说明：
+1.单行输出多行结果：
+	adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}' | xargs
+2.| sed 's/\.//g' --》 把小数点"."替换为空（去掉"."）
+3.| sed 's/\ //g' --》 把空格" "替换为空（去掉空格）
+
+优化版：
+adb shell service call iphonesubinfo 1 | awk -F"'" '{print $2}' | xargs | sed 's/[\. ]//g'
+注意不要用"\s"、不生效: sed 's/[\. ]//g'->OK，sed 's/[\.\s]//g'->Bug

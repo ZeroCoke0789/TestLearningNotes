@@ -1,0 +1,1274 @@
+1. 注释
+	#: 表示注释
+	注意: 在 Shell 脚本中, 没有多行注释, 只有单行注释
+
+2. 变量
+	2.1 变量的定义:
+		注意: 
+			- 定义变量的时候, 变量名不需要加 $ 符号($变量名: 相当于取这个变量名的值)
+			- 变量名和等号之间不能有空格, 等号和值之间也不能有空格
+			- 变量名必须以字母(a-z、A-Z)、下划线开头
+			- 变量名的中间不能有空格, 不能有标点符号
+	2.2 只读变量:
+		关键字: readonly
+		用法: 
+			name="OUTMAN"
+			readonly name
+	2.3 删除变量
+		关键字: unset
+		用法:
+			name="OUTMAN"
+			unset name
+	2.4 变量类型
+			- 本地变量
+				作用域: 整个 bash 进程
+				用法: name="OUTMAN"
+			- 局部变量(关键字: local)
+				作用域: 当前代码块
+				用法: local name="OUTMAN"
+			- 环境变量(关键字: export)
+				作用域: 当前的 Shell 进程以及子进程
+				用法: export name="OUTMAN"
+			- 位置变量
+				用法: ${0} or $0, 推荐: ${0}
+				案例:
+					脚本代码:
+						#!/bin/bash
+						name=${1}
+						age=${2}
+						sex=${3}
+						echo "姓名: ${name}, 年龄: ${age}, 性别: ${sex}"
+					执行脚本: 
+						./02-Shell1.sh "哈哈" 29 "男"
+					执行结果: 
+						姓名: 哈哈, 年龄: 29, 性别: 男
+					注意: 
+						${0} 是 ./02-Shell1.sh, 参数要用空格分割开
+			- 特殊变量
+				- ${0} 文件名
+				- ${?} 表示返回上一个命令执行状态返回值
+					0: 表示执行成功
+					1: 表示程序执行结果
+					2: 程序状态返回码(0~255)
+					系统预留错误(1、2、127)
+				- ${#} 参数个数
+				- ${*} 参数列表
+				- ${@} 参数列表
+					${*} 和 ${@} 的区别？
+						${*} 将所有参数组成一个字符串
+						${@} 按照一个一个参数进行输出
+				- ${$} 当前 Shell 的进程 ID
+				- ${!} 执行上一个指令的 PID
+
+3. 字符串
+	3.1 单引号字符串
+		用法: name='OUTMAN'
+	3.2 双引号字符串
+		用法: name="OUTMAN"
+	3.3 字符串的拼接
+		用法:
+			- 拼接方式一:
+				name='OUTMAN'
+				age=18
+				sex='男'
+				info="${name}${age}${sex}"
+			- 拼接方式二:
+				name='OUTMAN'
+				age=18
+				sex='男'
+				info="姓名:"${name}" 年龄:"${age}" 性别:"${sex}""
+	3.4 获取字符串的长度
+		语法: ${#变量名}
+		用法: 
+			name='OUTMAN'
+			echo ${#name}
+	3.5 字符串截取
+		语法: ${变量名:起始位置:长度}
+		用法:
+			- 从第1位截取到第4位(没有越界等问题)
+				name='OUTMAN'
+				echo ${name:1:4}
+			- 从第2位截取到最后
+				name='OUTMAN'
+				echo ${name:2}
+	3.6 字符串的删除
+		语法: 
+			- ${变量名#删除的字符串 正则表达式}
+			作用: 从字符串开头(左边), 开始匹配要删除的字符串, 是从左边删除到右边
+			用法:
+				name='OUTMAN'
+				echo ${name#TM}
+				结果: 删不掉, 原因是匹配不到, 左边是O, 所以匹配不到
+
+				name='OUTMAN'
+				echo ${name#OU}
+				结果: TMAN
+
+				查找指定的第一个字符, 并且将其前面所有的字符都删除(包含指定的字符自己都会被删除)
+				name='Hello World'
+				echo ${name#*W}
+				结果: orld
+
+				指定删除的范围
+				name='Hello World'
+				echo ${name#e*W}
+				结果: 删除不掉, 原因是匹配不到
+
+				name='Hello World'
+				echo ${name#*l}
+				结果: lo World
+			- ${变量名##删除的字符串 正则表达式}
+			作用: 从字符串结尾(右边), 开始匹配要删除的字符串, 是从左边删除到右边
+			用法: 
+				name='Hello World'
+				echo ${name##*W}
+				结果: orld
+
+				name='Hello World'
+				echo ${name##*l}
+				结果:d
+			- ${变量名%删除的字符串 正则表达式}
+			作用: 从字符串结尾(右边), 开始匹配要删除的字符串, 是从右边删除到左边
+			用法:
+				name='Hello World'
+				echo ${name%*W}
+				结果: 删除不掉, 从右开始匹配的时候, 匹配不到W
+
+				name='Hello World'
+				echo ${name%W*}
+				结果: Hello 
+
+				删除指定范围
+				name='Hello World'
+				echo ${name%e*d}
+				结果: H
+
+				name='Hello World'
+				echo ${name%l*}
+				结果: Hello Wor
+			- ${变量名%%删除的字符串 正则表达式}
+			作用: 从字符串开始(左边), 开始匹配要删除的字符串, 是从右边删除到左边
+			用法:
+				name='Hello World'
+				echo ${name%%l*}
+				结果: He
+		总结:
+			- 从左边删除到右边
+			#: 表示查询的方向从左到右
+			##: 表示查询的方向从右到做
+			- 从右边删除到左边
+			%: 表示查询的方向从右到做
+			%%: 表示查询的方向从左到右
+
+4. echo 命令
+	4.1 显示普通字符串
+		echo "iPhoneX 标配 8388"
+	4.2 显示转义字符
+		echo " \"iPhoneX 顶配 9688\" "
+	4.3 显示变量
+		name="iPhoneX"
+		echo "${name} 8366"
+	4.4 显示换行
+		错误写法: echo "iPhoneX \n 8366"
+		正确写法: 
+			(-e: 表示开启转义功能)
+			echo -e "iPhoneX \n 8366"
+	4.5 不换行
+		echo "iPhoneX"
+		echo "8366"
+		如何实现不换行?
+			echo -e "iPhoneX\c"
+			echo "8366"
+		注意: 
+			-e: 表示开启转义功能
+			\c: 表示不换行
+	4.6 显示一个执行命令
+		输出当前时间
+		echo `date`
+	4.7 退出命令
+		语法: exit 状态
+		- 用法一:
+			str="OT买了一台电脑"
+			echo ${str}
+			exit
+			echo "你完蛋了, 买了假话"
+		- 用法二:
+			退出的时候输出一个状态
+			exit 0
+		状态码:
+			0: 命令成功执行
+			1: 一般性的未知错误
+			2: 不适合的 shell 命令
+			126: 命令不可执行
+			127: 没找到命令
+			130: 通过 Ctrl + C 终止的命令
+			255: 正常范围之内的退出状态码
+5. 数组
+	5.1 语法: 数组名=(值1 值2 值3)
+	5.2 初始化数组:
+		- 方式一(字面量复制):
+			info=("OUT" "MAN" "_" "Coder")
+			echo ${info}
+			输出结果: OUT(默认打印第一个元素)
+		- 方式二:
+			info=()
+			info[0]="OUT"
+			info[1]="MAN"
+			info[2]="_"
+			info[3]="Coder"
+			echo ${info[1]}
+			输出结果: MAN
+	5.3 读取数组
+		- 语法结构: ${数组名[下标]}
+			info=("OUT" "MAN" "_" "Coder")
+			echo ${info[3]}
+			输出结果: Coder
+		- 输出所有元素
+			info=("OUT" "MAN" "_" "Coder")
+			echo ${info[@]} or echo ${info[*]}
+			注意:
+				@ 和 * 的区别:
+					@: 按照一个一个参数进行输出, 例: "OUT" "MAN" "_" "Coder"
+					*: 将所有参数组成一个字符串, 例: "OUT MAN _ Coder"
+	5.4 数组长度
+		- 方式一(获取数组元素的个数):
+			语法: ${#数组名[@]}
+				info=("OUT" "MAN" "_" "Coder")
+				echo ${#info[@]}
+		- 方式二(获取数组元素的个数):
+			语法: ${数组名[*]}
+				info=("OUT" "MAN" "_" "Coder")
+				echo ${#info[*]}
+				注意: 这个是自动的根据空格将字符串内容分割开来
+		- 方式三(获取单个字符串元素的长度):
+			语法: ${#数组名[下标]}
+				info=("OUT" "MAN" "_" "Coder")
+				echo ${#info[1]}
+6. 参数的传递
+	6.1 语法定义
+		./文件名称.sh 参数1 参数2 参数3
+		用法:
+			${0}: 文件名称
+			${1}: 参数1
+			${2}: 参数2
+			echo ${0} ${1} ${2}
+		执行脚本:
+			./文件名称.sh 参数1 参数2
+	6.2 特殊字符
+		- ${#}: 脚本输入参数的个数
+		- %{*}: 脚本输入参数的列表, 将所有参数组成一个字符串
+		- %{@}: 脚本输入参数的列表, 按照一个一个参数进行输出
+7. 基本运算符
+	7.1 算数运算符
+		- 加法 "+" 运算:
+			用法: 
+				a=8388
+				b=9688
+				c=`expr $a + $b`
+				echo ${c}
+				注意: expr 是规定的命令, 通过这个命令将两个值相加, 而不能是通过c=a+b来计算
+		- 减法 "-" 运算:
+			用法: 
+				a=8388
+				b=9688
+				c=`expr $a - $b`
+				echo %{c}
+		- 乘法 "*" 运算
+			用法: 
+				a=8388
+				b=9688
+				c=`expr $a \* $b`
+				echo %{c}
+				注意: 乘法需要加一个转义字符, 否则报错 expr: syntax error
+		- 除法 "/" 运算
+			用法: 
+				a=8388
+				b=9688
+				c=`expr $a / $b`
+				echo %{c}
+				注意: 除法如果将9688换成9688.0, 则报错expr: not a decimal number: '9688.0', 原因需自己找下
+		- 取余 "%" 运算
+			用法:
+				a=8388
+				b=9688
+				c=`expr $a % $b`
+				echo %{c}
+		- 赋值 "=" 运算
+			用法: 
+				a=8388
+				b=${a}
+				echo ${b}
+		- 恒等于 "==" 运算
+			用法: 
+				a=8388
+				b=9688
+				if [ $a == $b ]
+				then
+					echo "a 等于 b"
+				else
+					echo "a 不等于 b"
+				fi
+	7.2 关系运算符
+		- "-eq": 检测两个数是否相等, 相等返回 true
+			用法:
+				a=8399
+				b=8399
+				if [ $a -eq $b]
+				then
+					echo "a 和 b 相等"
+				else
+					echo "a 和 b 不相等"
+				fi
+		- "-ne": 检测两个数是否不相等, 不相等返回 true
+			用法:
+				a=8399
+				b=8399
+				if [ $a -ne $b]
+				then
+					echo "a 和 b 相等"
+				else
+					echo "a 和 b 不相等"
+				fi
+		- "-gt": 检测左边数是否大于右边数, 如果大于返回 true
+			用法:
+				a=9688
+				b=8399
+				if [ $a -gt $b]
+				then
+					echo "a > b"
+				else
+					echo "a <= b"
+				fi
+		- "-lt": 检测左边数是否小于右边数, 如果小于返回 true
+			用法:
+				a=9688
+				b=8399
+				if [ $a -lt $b]
+				then
+					echo "a < b"
+				else
+					echo "a >= b"
+				fi
+		- "-ge": 检测左边数是否大于等于右边数, 如果大于等于返回 true
+			用法:
+				a=9688
+				b=8399
+				if [ $a -gt $b]
+				then
+					echo "a >= b"
+				else
+					echo "a < b"
+				fi
+		- "-le": 检测左边数是否小于等于右边数, 如果小于等于返回 true
+			用法:
+				a=9688
+				b=8399
+				if [ $a -le $b]
+				then
+					echo "a <= b"
+				else
+					echo "a > b"
+				fi
+	7.3 布尔值运算符
+		- "!": 非运算(表达式为 true, 则返回 false, 否则返回 true)
+			用法:
+				a=9688
+				b=8399
+				if [ $a != $b ]
+				then
+					echo "a != b"
+				fi
+		- "-o": 或运算(有一个表达式为 true, 则返回 true)
+			用法:
+				a=9688
+				b=8399
+				if [ $a -gt $b -o $a -ne $b ]
+				then
+					echo "a >= b"
+				else
+					echo "a < b"
+				fi
+		- "-a": 与运算(所有表达式为 true, 才返回 true)
+			用法:
+				a=6666
+				b=8399
+				if [ $a -lt $b -a $a != $b ]
+				then
+					echo "a < b && a != b"
+				else
+					echo "a > b"
+				fi
+	7.4 逻辑运算符
+		- "&&" 逻辑且
+			用法:
+				a=9688
+				b=8399
+				if [ $a -gt $b && $a -ne $b ]
+				then
+					echo "a > b && a != b"
+				else
+					echo "a < b"
+				fi
+				* 注意: 上面这么写报错: ./03-Shell.sh: line 190: [: missing `]'
+				正确写法:
+					a=9688
+					b=8399
+					if [[ $a -gt $b && $a -ne $b ]]
+					then
+						echo "a > b && a != b"
+					else
+						echo "a < b"
+					fi
+
+					if [ $a -gt $b ] && [ $a -ne $b ]
+					then
+						echo "a > b && a != b"
+					else
+						echo "a < b"
+					fi
+		- "||" 逻辑或
+			用法: 
+				a=9688
+				b=8399
+				if [[ $a -gt $b || $a -eq $b ]]
+				then
+					echo "a > b && a != b"
+				else
+					echo "a < b"
+				fi
+
+				if [ $a -gt $b ] || [ $a -eq $b ]
+				then
+					echo "a > b && a != b"
+				else
+					echo "a < b"
+				fi
+	7.5 字符串的运算
+		- "=": 检测两个字符串是否相等, 如果相等返回 true
+			用法:
+				a='JAY'
+				b="JAY"
+				if [ $a = $b ]
+				then
+					echo "字符串一样"
+				else
+					echo "字符串不一样"
+				fi
+		- "!=": 检测两个字符串是否不相等, 如果不相等返回 true
+			用法:
+				a='JAY'
+				b="JAY"
+				if [ $a != $b ]
+				then
+					echo "字符串一样"
+				else
+					echo "字符串不一样"
+				fi
+		- "-z": 检测字符串的长度是否为 0, 如果是返回 true
+			用法:
+				a="JAY"
+				if [ -z $a ]
+				then
+					echo "字符串 a 为空"
+				else
+					echo "字符串 a 不为空"
+				fi
+		- "-n": 检测字符串的长度是否不为 0, 如果不为 0 返回 true
+			用法:
+				a="JAY"
+				if [ -n $a ]
+				then
+					echo "字符串 a 不为空"
+				else
+					echo "字符串 a 为空"
+				fi
+			注意: 上面那样写存在问题, 当没有变量 a, 或者变量 a 为空, 结果打印都是 字符串 a 不为空
+			正确写法:
+				 if [ -n "${a}" ]
+				then
+					echo "字符串 a 不为空"
+				else
+					echo "字符串 a 为空"
+				fi
+		- "字符串": 检测字符串是否为空, 如果不为空返回 true
+			用法:
+				a=""
+				if [ $a ]
+				then
+					echo "字符串 a 不为空"
+				else
+					echo "字符串 a 为空"
+				fi
+	7.6 文件测试运算符
+		- "-d": 检测文件是不是一个目录, 如果是, 返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell"
+				if [ -d $filePath ]
+				then
+					echo "filePath 是一个目录"
+				else
+					echo "filePath 不是一个目录"
+				fi
+		- "-r": 检测文件是否可读, 如果可读, 返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -r $filePath ]
+				then
+					echo "filePath 是可读的"
+				else
+					echo "filePath 不是可读的"
+				fi
+		- "-w": 检测文件是否可写, 如果可写, 返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -w $filePath ]
+				then
+					echo "filePath 是可写的"
+				else
+					echo "filePath 不是可写的"
+				fi
+		- "-x": 检测文件是否是可执行, 如果可执行, 返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -x $filePath ]
+				then
+					echo "filePath 是可执行的"
+				else
+					echo "filePath 不是可执行的"
+				fi
+		- "-f": 检测文件是否是一个普通文件(既不是目录, 也不是设备文件(系统文件、隐藏文件)), 如果是, 则返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -f $filePath ]
+				then
+					echo "filePath 是普通文件"
+				else
+					echo "filePath 不是普通文件"
+				fi
+		- "-s": 检测文件是否为空(大小是否为0, 是否有内容), 如果不为空(文件大小不为0, 有内容), 则返回 true
+			用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -s $filePath ]
+				then
+					echo "filePath 文件有内容"
+				else
+					echo "filePath 是空文件"
+				fi
+		- "-e": 检测文件是否存在(包含目录和文件), 如果存在, 返回 true
+			 用法:
+				filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/03-Shell.sh"
+				if [ -e $filePath ]
+				then
+					echo "filePath 文件存在"
+				else
+					echo "filePath 文件不存在"
+				fi
+8. 流程控制
+	8.1 if 语句
+		语法:
+			if [ 条件 ]
+			then
+				代码
+			fi
+	8.2 if-else 语句
+		语法:
+			if [ 条件 ]
+			then
+				代码
+			else
+				代码
+			fi
+	8.3 if-if-else 语句
+		语法:
+			if [ 条件 ]
+			then
+				代码
+			elif [ 条件 ]
+			then
+				代码
+			else
+				代码
+			fi
+	8.4 for 循环语句 - 简单的值
+		语法:
+			for 变量名 in item1 item2 item3 ...
+			do
+				// 代码
+			done 
+
+			arrNames=("James" "Wade" "Kobe")
+			for strName in ${arrNames[*]}
+			do
+				echo ${strName}
+			done
+	8.5 for 循环语句 - 存在特殊字符(需要转义)
+		语法:
+			for 变量名 in "I don\`t know"
+			do
+				// 代码
+			done
+			注意: 如果有特殊字符需要加转义字符(\), 上面的输出结果是将 "I don\`t know" 当成一个字符串, 输出就是 "I don\`t know"
+
+			for 变量名 in I don\`t know
+			do
+				// 代码
+			done
+			注意: 如果有特殊字符需要加转义字符(\), 上面的输出结果是将 I don\`t know 以空格分割开来输出 I、don\`t、know 三部分
+	8.6 for 循环语句 - 从变量里面读取
+		语法:
+			strInfo="I don\`t know"
+			for str in ${strInfo}
+			do
+				// 代码
+			done
+	8.7 for 循环语句 - 读取目录(注意结尾需要加通配符 *)
+		语法:
+			filePath="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/*"
+			for file in ${filePath}
+			do
+				// 代码
+			done
+	8.8 for 循环语句 - 支持类似于大多数语言的写法
+		语法:
+			for (( i=0; i<10; i++ ))
+			do
+				// 代码
+			done
+	8.9 for 循环语句 - 嵌套
+		语法:
+			for ((i=0; i<10; i++))
+			do
+				for (( j=0; j<2; j++ ))
+				do
+					// 代码
+				done
+			done
+	8.10 for 循环语句 - 无限循环
+		语法:
+		for ((;;))
+		do
+			// 代码
+		done
+	8.11 while 循环 - 基本循环
+		语法:
+			while(( 条件 ))
+			do
+				// 代码
+			done
+		用法:
+			a=1
+			while (( $a<10 ))
+			do
+				echo ${a}
+				a=`expr $a + 1`
+			done
+	8.12 while 循环 - 无限循环
+		语法:
+			while :
+			do
+				// 代码
+			done
+
+			while true
+			do
+				// 代码
+			done
+	8.13 case 语句
+		语法:
+			case 值 in
+			模式1)
+				// 代码
+				;;
+			模式2)
+				// 代码
+				;;
+			模式3)
+				// 代码
+				;;
+			esac
+		用法:
+			a=3
+			case ${a} in
+			1)
+				echo "a = 1"
+				;;
+			2)
+				echo "a = 2"
+				;;
+			3)
+				echo "a = 3"
+				;;
+			esac
+	8.14 until 循环
+		语法:
+			until (( 条件 ))
+			do
+				// 代码
+			done
+		注意: 条件为 false 的时候, 进入循环
+		用法: 
+			a=1
+			until (( a>5 ))
+			do
+				echo ${a}
+				a=`expr $a + 1`
+			done
+	8.15 break 跳出循环
+		- 跳出单个循环
+			for ((i=0; i<10; i++))
+			do
+				echo ${i}
+				if [ $i -eq 5 ]
+				then	
+					echo "退出循环"
+					break
+				fi
+			done
+		- 跳出内部循环
+			for ((i=0; i<3; i++))
+			do
+				echo "外层循环i: ${i}"
+				for ((j=0; j<3; j++))
+				do
+					echo "内层循环j: ${j}"
+					if [ ${j} -eq 2 ]
+					then
+						echo " --- 退出内层循环 --- "
+						break
+					fi
+				done
+			done
+		- 跳出外部循环
+			for ((i=0; i<3; i++))
+			do
+				echo "外层循环i: ${i}"
+				for ((j=0; j<3; j++))
+				do
+					echo "内层循环j: ${j}"
+					if [ ${j} -eq 2 ]
+					then
+						echo " --- 退出内层循环 --- "
+						break 2
+					fi
+				done
+			done
+			注意: break 跳出的层数, 默认情况下为 1, 表示跳出 1 层循环, 如果为 n, 就表示跳出 n 层循环
+	8.16 continue 跳出循环
+			for ((i=0; i<3; i++))
+			do
+				echo "i: ${i}"
+				if [ $i -eq 2]
+				then
+					continue
+				else
+					echo "i: ${i}"
+				fi
+			done
+9. 文件包含
+	语法一(./文件名):
+		文件A 
+			名称: fileA.sh
+			内容: 
+				#!/bin/bash
+				echo "我是文件A"
+		文件B
+			名称: fileB.sh
+			内容:
+				#!/bin/bash
+				#文件B包含文件A的内容
+				./fileA.sh
+				echo "我是文件B"
+		执行脚本 ./fileB.sh
+	语法二(source 文件名):
+		文件A 
+			名称: fileA.sh
+			内容: 
+				#!/bin/bash
+				echo "我是文件A"
+		文件B
+			名称: fileB.sh
+			内容:
+				#!/bin/bash
+				#文件B包含文件A的内容
+				source fileA.sh
+				echo "我是文件B"
+		执行脚本 ./fileB.sh
+		注意: source 是一个关键字, source ./fileA.sh 这样写也是可以的!!!
+10. cat 命令 简单的介绍
+	作用: 
+		- 查看文件的内容
+		- 链接文件
+		- 创建一个或者多个文件
+		- 重定向输出到终端
+		- 重定向到文件
+	语法: cat [选项][文件]
+	使用:
+		- cat fileA.sh 
+			查看文件内容
+		- cat -n fileA.sh
+			-n: 可以显示文件的内容和行号(无论是否空白行)
+			-b: 和 -n 类似的功能, -b 只标记非空白行的行号
+			-e: 在每一行的末尾显示一个美元符 $, 在需要将多行内容转换成一行内容的时候, 就非常有用了!
+		- cat
+			接收标准的输入, 同时还会输出标准的输出(回车即可)
+			退出: Ctrl + C
+11. 获取用户输入 read 命令
+	11.1 接收一个输入的内容
+		写法一:
+			echo "请输入你的名字:"
+			read name
+			echo "您的名字是:${name}"
+		写法二:
+			read -p "请输入你的名字:" name
+			echo "您的名字是:${name}"	
+			注意: -p: 输入的参数的提示
+	11.2 超时, 输入的时候, 过了多久没输入就过期
+		if read -t 5 -p "请输入您的名字: " name
+		then
+			echo "您的名字是: ${name}"
+		else 
+			# 用来换行
+			echo
+			echo "超时未输入"
+		fi
+		注意: 
+			-t: 时间, 限制多少秒之内输入
+			-p: 提示的参数
+	11.3 -s 隐藏输入的内容
+		read -s -p "请输入您的密码: " password
+		# 用来换行
+		echo
+		echo "您的密码是: ${password}"
+	11.4 从文件里面读取内容
+		cat fileB.sh | while read str
+		do
+			echo ${str}
+		done
+		注意: 通过 cat 命令读取文件内容, 然后再通过 while 循环 read 命令一行一行读取, | 是一个管道
+12. printf 命令使用
+		12.1 printf 和 echo 命令的区别 ?
+			- printf 不会换行 echo 自动换行
+			- printf 一般用于格式打印 echo 一般用于标准输出
+		12.2 printf 语法结构
+				用法一:
+					printf format-string 参数列表
+					# 打印输出表头
+					printf "%-10s %-8s %4s \n" 姓名 性别 体重 kg
+					# 打印输出内容
+					printf "%-10s %-8s %4s \n" James 男 200 kg
+					printf "%-10s %-8s %4s \n" Wade 男 160 kg
+					printf "%-10s %-8s %4s \n" Kobe 男 140 kg
+					注意:
+						- %-10s: 一个宽度为10个字符, -表示左对齐(默认是居右展示), s表示字符串, 假如一个姓名超过了10个字符范围, 也会完整展示
+						- %-4.2f: 一个宽度为4, 小数点2位, f表示小数
+				用法二:
+					printf format-string 为双引号
+						printf "%d %s \n" 1 "OUTMAN"
+					printf format-string 为单引号
+						printf '%d %s \n' 1 "OUTMAN"
+					注意:
+						%d: 整数
+						%s: 字符串
+				用法三(特殊字符):
+					printf " \"<%s>\" \n" "OUTMAN"
+
+13. 函数
+	13.1 语法结构
+		[function] 方法名称() {
+			// 逻辑代码
+		}
+ 		用法: 
+ 			# 方法定义
+ 			function textFunc() {
+				echo "文件名称: ${0}"
+ 				echo "第一个参数: ${1}"
+ 				echo "第二个参数: ${2}"
+ 				echo "第三个参数: ${3}"
+ 				return 100
+ 			}
+ 			# 调用方法
+ 			echo "方法调用前"
+ 			textFunc $1 $2 "666666"
+ 			echo "方法调用后"
+ 		注意: 
+ 			- 执行脚本传入的参数, 直接这样写是在 textFunc 方法中拿不到的, 必须要我们传入进去
+ 			- 我们自己在内部直接调用 textFunc 方法的时候传入参数也可以
+ 	13.2 函数放回值问题
+ 		用法:
+ 			function test() {
+				echo "第一个参数 ${1}"
+				echo "第一个参数 ${2}"
+				echo "第一个参数 ${3}"
+				return `expr ${1} + ${2} + ${3}`
+			}
+			test 10 30 50
+			echo ${?}
+		注意: 
+			${?}: 表示返回上一个命令执行的返回值, 执行函数就是一个命令, 所以用 ${?} 来获取函数的返回值
+14. 输入、输出重定向(重定向的目的: 操作文件的输入和输出)
+	14.1 输入 or 输出重定向到控制台 or 文件
+		- 输入重定向
+			语法:
+				wc 文件名称
+				注意: wc 是一个命令
+			用法("<": 输入重定向):
+				wc fileA.sh
+				注意: 
+					- 将 fileA 中内容读取到控制台
+					- wc 读取到三个重要的信息
+						- 第一个参数: 文件行数
+						- 第二个参数: 文件词数(以空格、换行分割就算)
+						- 第三个参数: 文件大小字节数
+			其他语法: 
+				"<<" 创建文件
+		- 输出重定向
+			- 输出重定向 替换
+				语法: > 文件名
+				用法(">": 我们把方向指向一份文件, 那么将文件中的内容删除, 写入新的内容):
+					fileA.sh 中代码
+						#!/bin/bash
+						echo "我是文件A"
+					fileB.sh 中代码
+						#!/bin/bash
+						echo "我是文件B"
+						# echo 原本是定向到控制台输出的, 加了 > 之后, 要输出重定向到 fileA.sh 中, 将原本 fileA.sh 中的内容替换成 fileB.sh 中输出重定向的内容
+						echo "Hello World" > fileA.sh
+			- 输出重定向 追加
+				语法: >> 文件名
+				用法:
+					fileA.sh 中代码
+						#!/bin/bash
+						echo "我是文件A"
+					fileB.sh 中代码
+						#!/bin/bash
+						echo "我是文件B"
+						# echo 原本是定向到控制台输出的, 加了 >> 之后, 要输出重定向到 fileA.sh 中, 在 fileA.sh 中的内容最后追加上 fileB.sh 中输出重定向的内容
+						echo "Hello World" >> fileA.sh
+15. 管道
+	应用场景:
+		- 一个命令的输出, 作为另外一个命令的输入
+	语法:
+		commond 1 | commond 2
+16. expr 命令深入研究:
+		方式一:
+			a=100
+			b=200
+			value=`expr $a + $b`
+		方式二:
+			a=100
+			b=200
+			value=$(expr $a + $b)
+		方式三:
+			a=100
+			b=200
+			value=$[ $a + $b ]
+		expr 其他用法:
+			- ARG1 | ARG2: 如果 ARG1 既不是 null 也不是 0, 那么返回 ARG1, 否则返回 ARG2
+			- ARG1 & ARG2: 如果两边的值都不为 0 或者空, 那么返回 ARG1, 否则返回 0 
+			- ARG1 < ARG2: ARG1 小于 ARG2
+			- ARG1 <= ARG2: ARG1 小于或等于 ARG2
+			- ARG1 = ARG2: ARG1 等于 ARG2
+			- ARG1 != ARG2: ARG1 不等于 ARG2
+			- ARG1 >= ARG2: ARG1 大于等于 ARG2
+			- ARG1 > ARG2: ARG1 大于 ARG2
+			- ARG1 + ARG2: 计算 ARG1 与 ARG2 相加之和
+			- ARG1 - ARG2: 计算 ARG1 与 ARG2 相减之积
+			- ARG1 * ARG2: 计算 ARG1 与 ARG2 相乘之积
+			- ARG1 / ARG2: 计算 ARG1 与 ARG2 相除之商
+			- ARG1 % ARG2: 计算 ARG1 与 ARG2 相除之余数
+17. 浮点数
+	17.1 bash 基本用法
+		bash: 计算器, 实际上是一种编程语言, 允许在命令中输入浮点数表达式, 然后解释并计算这个表达式, 最后返回结果
+		bash 计算器识别的类型:
+			- 数字: 整数、浮点数
+			- 变量: 简单变量、数组
+			- 注释
+			- 表达式
+			- 函数
+			... 等等
+	17.2 用法
+		直接在命令行输入 bc 命令, 然后进行计算
+		第一步: 输入 bc 命令, 相当于打开计算器
+			* bc命令: 在 shell 脚本语言中是个提示符, 可以通过 bc 命令访问 bash 计算器
+			bc
+			bc 1.06 # bc 的版本号
+			Copyright 1991-1994, 1997, 1998, 2000 Free Software Foundation, Inc.
+			This is free software with ABSOLUTELY NO WARRANTY.
+			For details type `warranty'.
+		第二步: 10 * 2.55
+		第三部: 输入 quit 命令 退出计算器
+	17.3 将 bash 计算器应用到 Shell 脚本中
+		语法:
+			val=$(echo "options; expression" | bc)
+			options: 表示选项(可以设置精度等等)
+			expression: 表示表达式
+			参考: http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=162393
+		用法一:
+			val=$(echo "1.56 * 100" | bc)
+			echo ${val}
+			注意: 1.56 * 100 称之为表达式 expression, options 是可以不写的
+		用法二:
+			val1=1.314
+			val2=0.618
+			val3=$(echo "$val1 * $val2" | bc)
+			val4=$(echo "$val3 * $val2" | bc)
+			echo "${val4}"
+			注意: 用法二用来简单的计算没有问题, 负责的计算就比较麻烦了
+		用法三(bc命令 + 输入重定向):
+			语法格式: 
+				val=$(bc << 标记
+						options
+						statements
+						expression
+						标记
+					)
+			用法:
+				val1=1.314
+				val2=0.618
+				val3=100
+				val4=100
+				val=$(bc << Fg
+						# 这里面赋值和计算是可以存在空格的
+						a = ($val1 * $val2)
+						b = ($val3 * $val4)
+						a * b
+					Fg)
+				echo ${val}
+18. 重定向 - 外部文件操作
+	18.1 输入、输出以及错误的概念
+		shell脚本语言中, 将输入、输出、错误分为了三种文件描述符(三种状态), 分别对应0、1、2:
+			- STDIN: 标准输入, 对应的值为 0, 对应键盘输入
+				标准输入: 
+					直接输入 cat 命令, 就是接收键盘输入, 然后输出到控制台
+				非标准输入(采用 cat 接收一个非 STDIN, 文件输入):
+					cat fileA.sh
+			- STDOUT: 标准输出, 对应的值为 1, 对应终端显示
+				重定向输出到文件(原本是输出到控制台, 现在是输出重定向到文件):
+					用法:
+						# 显示文件时间信息(年月日时分格式)、权限
+						ls - l fileA.sh
+						cat fileA.sh
+						# 追加内容
+						who >> fileA.sh
+						cat fileA.sh
+					注意: who 命令, 打印当前登录系统用户信息
+				重定向错误输出到文件中:
+					用法:
+						# 查找一个 a.sh 文件, 如果找不到就会报错
+						ls -al a.sh > 05-ShellError.sh
+					注意: 
+						-al 文件列表, 后面可以跟多个文件, 例如: ls -al a.sh b.sh 
+						当我们命令发生错误的时候, shell 脚本语言并不会将错误信息重定向到输出的重定向文件
+						即使输出的重定向文件不存在, shell 脚本也会帮我们创建输出重定向文件, 虽然创建了文件, 但是也不会将错误写入
+						shell 脚本对错误信息的处理和普通信息的输出是分开的, 如果我们需要捕获错误信息, 那么需要 STDERR 实现
+			- STDERR: 标准错误, 对应的值为 2
+19. 重定向 - 错误信息
+	19.1 只重定向错误
+		- 将 STDERR 文件描述修改为 2
+			用法: 
+				ls -al a.sh 2> 05-ShellError.sh
+			注意:
+				将 STDERR 文件描述修改为 2(自己测试, 2 和 > 之间不能有空格)
+		- 将 STDOUT 和 STDERR 结合使用
+			用法:
+				ls -al 05-Shell.sh 04-ShellD.sh 04-ShellE.sh 04-ShellF.sh 2> 05-ShellError1.sh
+			注意: 
+				如果找的到, 就直接打印对应信息, 如果找不到, 就将错误信息重定向输出到 05-ShellError1.sh 文件中
+	19.2 重定向错误和数据
+		- 将 STDOUT 和 STDERR 结合使用
+			报错信息的同时还要保存数据
+				用法: 
+					ls -al 05-Shell.sh 04-ShellD.sh 04-ShellE.sh 04-ShellF.sh 2> 05-ShellError2.sh 1> 05-ShellContent.sh
+				注意:
+					如果找不到, 就将错误信息重定向输出到 05-ShellError2.sh 文件中, 如果找的到, 就将正确的数据信息重定向输出到 05-ShellContent.sh
+		- 将 STDOUT 和 STDERR 同时输出到同一个文件
+			&>: 重定向结构
+				用法:
+					ls -al 05-Shell.sh 04-ShellD.sh 04-ShellE.sh 04-ShellF.sh &> 05-ShellErrorAndContent.sh
+20. 重定向输出
+	20.1 &: 临时重定向
+		用法一:
+			06-ShellA.sh
+				# 临时重定向, 将下面的这句话定义为错误信息, 所以为 2
+				echo "Hello World" >&2
+				echo "您好"
+		用法二:
+			06-ShellA.sh
+				# 临时重定向, 将下面的这句话定义为错误信息, 所以为 2
+				echo "Hello World" >&2
+				echo "您好"
+			执行脚本:
+				# 下面代码的 2 表示, 将 06-ShellA.sh 中标记的错误信息, 通过 STDERR 重定向到 06-ShellAError.sh 里面
+				./06-ShellA.sh 2> 06-ShellAError.sh
+	20.2 exec: 永久重定向
+		- 保存数据
+			用法: 
+				06-ShellB.sh
+					# exec 命令: 批量输出
+					exec 1> 06-ShellBContent.sh
+					echo "Hello World"
+					echo "您好"
+				执行脚本:
+					./06-ShellB.sh
+		- 保存错误信息 + 保存数据
+			用法:
+				06-ShellC.sh
+					# exec 命令: 批量输出
+					exec 1> 06-ShellCContent.sh
+					echo "Hello World"
+					echo "您好"
+					exec 2> 06-ShellCError.sh
+					# 下面的代码都增加了错误标记
+					echo "我报错了" >&2
+					echo "我报错了too" >&2
+				执行脚本:
+					./06-ShellC.sh
+			注意: 
+				只有进行了错误标记, 才会将其重定向输出到 06-ShellCError.sh 中, 没有进行错误标记的代码, 都会重定向输出到 06-ShellCContent.sh 中
+21. 重定向输入
+	用法: 
+		06-ShellD.sh
+			# 从 06-ShellDContent.sh 文件中读取内容到 06-ShellD.sh 里面
+			exec 0< 06-ShellDContent.sh
+			# 循环遍历读取
+			lineCount=1
+			while read str
+			do
+				echo "当前行数: ${lineCount} 读取到的内容: ${str}"
+				lineCount=$[ ${lineCount} + 1]
+			done
+		注意: 一旦设置了输入重定向, read 命令会自动链接文件输入内容, 所以 exec 0< 06-ShellDContent.sh 设置了输入重定向后, 通过 while read 就可以遍历读取,
+	但是这个方法有个问题, 当文件只有 n 行的时候, 如果我们读取文件, 只能读出 n - 1 行 !!! 千万注意
+22. 创建重定向文件描述符 - 输出的文件描述符(0、1、2 是系统默认提供给我们的文件描述符, 我们如何自定义自己的文件描述符)
+	22.1 自定义文件描述符
+		用法: 
+			06-ShellE.sh
+				# 重定向输出, 30 为自定义文件描述符
+				exec 30> 06-ShellEContent.sh
+				echo "Hello World"
+				echo "您好世界" >&30
+				echo "我报错了"
+			执行脚本:
+				./06-ShellE.sh
+	22.2 追加内容
+		用法: 
+			06-ShellE.sh
+				# 重定向输出, 30 为自定义文件描述符
+				exec 30>> 06-ShellEContent.sh
+				echo "Hello World"
+				echo "您好世界 OUTMAN" >&30
+				echo "我报错了"
+			执行脚本:
+				./06-ShellE.sh
+23. 恢复原始文件描述符(原来是 1, 然后我们修改成 2, 如何再恢复成 1)
+	23.1 将输出文件描述符恢复
+		用法:
+			06-ShellF.sh
+				# 最开始是 3, 然后我们重定向到 1
+				exec 3>&1
+				exec 1> 06-ShellFContent.sh
+				echo "Hello World"
+				echo "您好世界"
+				echo "我报错了"
+				# 将 1 还原成原始的文件描述符 3
+				exec 1>&3
+				echo "还原完成"
+			执行脚本
+				./06-ShellF.sh
+		注意: 系统默认的 STDOUT(1), 是可以不用标记, 就可以直接输出到文件 06-ShellFContent.sh
+	23.2 将输入文件描述符恢复
+		用法:
+			06-ShellG.sh
+				# 最开始是 6, 然后我们重定向到 0
+				exec 6<&0
+				exec 0< 06-ShellGContent.sh
+				lineCount=1
+				while read str
+				do
+					echo "行号: ${lineCount} 内容: ${str}"
+					lineCount=$[ ${lineCount} + 1 ]
+				done
+				# 将 0 还原成原始的文件描述符 6
+				exec 0<&6
+				read -p "你最喜欢的球星" star
+				case ${star} in
+				James|james) 
+							echo "勒布朗"
+							;;
+				Wade|wade) 
+							echo "韦德"
+							;;
+				*)	
+							echo "其他人"
+							;;
+				esac
+			执行脚本
+				./06-ShellG.sh
+		注意: 在 case-in 中, *) 相当于 iOS Switch 语句中的 default
+24. 创建读写文件描述符
+	作用: 一个文件既可以读, 也可以写
+		用法:
+			06-ShellHContent.sh
+				Hello World
+				您好世界
+				我报错了
+			06-ShellH.sh
+				# 3 为自定义读写文件描述符
+				exec 3<> 06-ShellHContent.sh
+				# 从 06-ShellHContent.sh 文件读取内容
+				read str <&3
+				echo "read: ${str}"
+				# 将内容写入 06-ShellHContent.sh 文件
+				echo "O-U-T-M-A-N" >&3
+		注意: 
+			为什么替换了第二行 ?
+			因为文件指针读取完了第一行, 文件指正指向了第二行, 所以第二行的内容被替换了, 替换完成之后文件指正指向了第三行, 所以插入一行空内容, 我们原先第三行的内容跑到了第四行
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+#####################
+	- 删除中间字符串如何实现
+	https://www.baidu.com
+
+
+	- 获取文件名和文件路径(path="/Users/outman_coder/Desktop/OT_StudyDemoCode/02-OC_SkillUpgrading/OTStudy_SkillUpgrading/13-Shell/01-Shell-HelloWorld.json")
+	获取文件路径: echo ${path%/*}	
+	获取文件名: echo ${path##*/}
+
+
+	- function 方法的返回值为字符串 怎么写
+
+	- 利用 while read 遍历读取文件, 会少最后一行
+
+#####################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
