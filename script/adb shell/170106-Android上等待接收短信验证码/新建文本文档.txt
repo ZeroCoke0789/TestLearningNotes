@@ -1,0 +1,13 @@
+分享人：任羿
+
+分享时间：20170106
+
+分享内容：
+
+python写的等待获取短信验证码脚本，可双击运行，可python命令运行。
+
+python命令运行时，可传超时时间，默认10秒。如：python test_getCodeFromMms.py 20
+
+下载地址：test_getCodeFromMms.py
+
+参考文章：TesterHome论坛-如何获取手机短信中的验证码(https://testerhome.com/topics/6970)

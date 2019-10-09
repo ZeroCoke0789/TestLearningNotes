@@ -22,6 +22,17 @@ adb connect $ip
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
+## 输出apk对应的package名
+apk_name=AutoTraderCloud_beta.apk &&
+if [ ! -f ${apk_name} ]; then
+    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
+else
+    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
+    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` \
+    && echo $pkg_name
+fi
+
+
 apk_name=AutoTraderCloud_csy.apk &&
 if [ ! -f ${apk_name} ]; then
     echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
@@ -46,6 +57,7 @@ fi
 查看某接口列表字段		[^,]*,   [^}]*}
 curl 'xxx_http_url' | awk 'BEGIN{ RS="{" }{print $0}' | grep -o "fastpublic\"[^,]*"
 
+# adb shell 截图
 pic_path="//sdcard/`date +%Y-%m-%d_%k%M%S`.png" && adb shell screencap -p ${pic_path} && adb pull ${pic_path} ./ && adb shell rm ${pic_path}
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 

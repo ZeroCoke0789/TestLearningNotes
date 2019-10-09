@@ -11,8 +11,8 @@
 百度即可，略
 
 环境变量：  
-JAVA_HOME：JDK安装目录  
-CLASSPATH：".:${JAVA_HOME}/lib"（待确定）
+export JAVA_HOME=JDK安装目录  
+export CLASSPATH=".:%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar" 
 
 ---
 
