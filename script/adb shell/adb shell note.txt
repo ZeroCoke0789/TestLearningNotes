@@ -62,16 +62,27 @@ pic_path="//sdcard/`date +%Y-%m-%d_%k%M%S`.png" && adb shell screencap -p ${pic_
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
-adb shell am start -a android.intent.action.MAIN  -n com.android.settings/.wifi.WifiSettings
+# 使用默认浏览器打开指定网页：
+adb shell am start -a android.intent.action.VIEW -d "http://athm.cn/h64utbc"
+前面都固定，-d 后面接网址。
 
-adb shell rm -r "//sdcard/车智赢+" \
-| adb shell rm -r "//sdcard/车智赢+小视频"
+# 打开wifi设置菜单
+adb shell am start -a android.intent.action.MAIN -n com.android.settings/.wifi.WifiSettings
 
+# 删除指定目录
+adb shell rm -r "//sdcard/车智赢+" | adb shell rm -r "//sdcard/车智赢+小视频"
+adb shell rm -r "//sdcard/车智赢+" "//sdcard/车智赢+小视频"
+
+# 启动指定应用
 adb shell am start -W com.che168.autotradercloud/.launch.LaunchActivity -S
+
+# 清除指定应用缓存
 adb shell pm clear com.che168.autotradercloud
+
+# 强制关闭应用
 adb shell am force-stop com.che168.autotradercloud
 
-
+# 安装应用
 adb shell pm install //sdcard/${apk_name} 
 for %i in (*.apk) do adb install %i
 
