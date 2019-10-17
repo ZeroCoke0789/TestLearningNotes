@@ -12,9 +12,15 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 // import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -69,7 +75,16 @@ public class Android_02_ByNoApp {
 		}
 
 		// 登录页-账号输入框 com.che168.autotradercloud:id/itv_account
-		WebElement el1 = driver.findElementById("com.che168.autotradercloud:id/itv_account");
+		// WebElement el1 = driver.findElementById("com.che168.autotradercloud:id/itv_account");
+		  // 流畅等待
+        FluentWait<WebDriver> el = new FluentWait<WebDriver>(driver)
+                .withTimeout(10, TimeUnit.SECONDS)
+                .pollingEvery(250, TimeUnit.MILLISECONDS)
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class);
+        el.until(ExpectedConditions.visibilityOfElementLocated(By.id("com.che168.autotradercloud:id/itv_account")));
+
+		var el1 = (AndroidElement) driver.findElementById("com.che168.autotradercloud:id/itv_account");
 		el1.click();
 		el1.sendKeys("测试专用豪华版");
 
