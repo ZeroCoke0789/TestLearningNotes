@@ -3,7 +3,7 @@ num=`echo "$device_list" | awk '{if($0!~"^$") print $0}' | wc -l` &&
 if [ $num -eq 0 ]; then
     echo "当前没有连接中的设备"
 elif [ $num -ge 2 ]; then
-    echo "当前连接中设备有2个以上，将开始解除链接"
+    echo "当前连接中设备有2个以上，无法连接，将取消所有设备的连接。"
     adb disconnect
 else
     echo "OK，当前只连接了1个设备"
