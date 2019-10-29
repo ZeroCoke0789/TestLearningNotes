@@ -1065,7 +1065,7 @@ body .markdown-body
 <div class="toc">
 <ul>
 <li><a href="#appium_31__appium-serverandroid">Appium安装_31_双平台_appium-server源码安装及Android端环境安装</a><ul>
-<li><a href="#appium">一、Appium源码安装：</a><ul>
+<li><a href="#appium-server">一、Appium Server源码安装：</a><ul>
 <li><a href="#1appiumappium">1.从appium官网下载最新appium源码：</a></li>
 <li><a href="#2appium">2.解压appium：</a></li>
 <li><a href="#3cdappiumnpm-installnode">3.cd进入appium源码目录，执行“npm install”安装node依赖：</a></li>
@@ -1075,6 +1075,14 @@ body .markdown-body
 <li><a href="#7appium">7.检查appium是否安装好了：</a></li>
 <li><a href="#8appium">8.检查appium环境是不是都配好了：</a></li>
 <li><a href="#9">9.下载问题答疑：</a></li>
+</ul>
+</li>
+<li><a href="#appium-client">二、下载安装Appium Client</a><ul>
+<li><a href="#java">Java:</a><ul>
+<li><a href="#maven">Maven</a></li>
+<li><a href="#maven-repository-httpsmvnrepositorycomartifactioappiumjava-client">Maven Repository: https://mvnrepository.com/artifact/io.appium/java-client</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#androidappium">二、Android端Appium环境运行测试：</a><ul>
@@ -1094,7 +1102,7 @@ body .markdown-body
 </ul>
 </div>
 <hr />
-<h2 id="appium">一、Appium源码安装：<a class="headerlink" href="#appium" title="Permanent link"></a></h2>
+<h2 id="appium-server">一、Appium Server源码安装：<a class="headerlink" href="#appium-server" title="Permanent link"></a></h2>
 <h5 id="1appiumappium">1.从appium官网下载最新appium源码：<a class="headerlink" href="#1appiumappium" title="Permanent link"></a></h5>
 <div class="codehilite"><pre>https://github.com/appium/appium-desktop/releases/latest
 从上面地址下载最新appium源码
@@ -1142,6 +1150,86 @@ Appium Install：<br />
 <code>--registry=https://registry.npm.taobao.org</code><br />
 Chromedriver Install：<br />
 <code>--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver</code></p>
+<hr />
+<h2 id="appium-client">二、下载安装Appium Client<a class="headerlink" href="#appium-client" title="Permanent link"></a></h2>
+<p><a href="https://testerhome.com/topics/11101">AppiumServer&amp;AppiumClient&amp;AppiumGUI 分别是什么？有什么区别？</a></p>
+<p>appium server是一个web接口服务，它只管接受http请求，而负责将各个语言的测试脚本翻译成appium的http请求与server端通讯的程序，叫appium client。想要运行Appium测试，还需要下载该程序。</p>
+<p>其各client的Github子项目地址如下：</p>
+<table>
+<thead>
+<tr>
+<th>Language/Framework</th>
+<th>Github Repo and Installation Instructions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ruby</td>
+<td><a href="https://github.com/appium/ruby_lib">https://github.com/appium/ruby_lib</a></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><a href="https://github.com/appium/python-client">https://github.com/appium/python-client</a></td>
+</tr>
+<tr>
+<td>Java</td>
+<td><a href="https://github.com/appium/java-client">https://github.com/appium/java-client</a></td>
+</tr>
+<tr>
+<td>JavaScript (Node.js)</td>
+<td><a href="https://github.com/admc/wd">https://github.com/admc/wd</a></td>
+</tr>
+<tr>
+<td>Objective C</td>
+<td><a href="https://github.com/appium/selenium-objective-c">https://github.com/appium/selenium-objective-c</a></td>
+</tr>
+<tr>
+<td>PHP</td>
+<td><a href="https://github.com/appium/php-client">https://github.com/appium/php-client</a></td>
+</tr>
+<tr>
+<td>C# (.NET)</td>
+<td><a href="https://github.com/appium/appium-dotnet-driver">https://github.com/appium/appium-dotnet-driver</a></td>
+</tr>
+<tr>
+<td>RobotFramework</td>
+<td><a href="https://github.com/jollychang/robotframework-appiumlibrary">https://github.com/jollychang/robotframework-appiumlibrary</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="java">Java:<a class="headerlink" href="#java" title="Permanent link"></a></h4>
+<h6 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link"></a></h6>
+<p>Add the following to pom.xml:</p>
+<p><div class="codehilite"><pre><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>io.appium<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>java-client<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>${version.you.require}<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+If it is necessary to change the version of Selenium then you can configure pom.xml like following:</p>
+<div class="codehilite"><pre><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>io.appium<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>java-client<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>${version.you.require}<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/test&gt;</span>
+  <span class="nt">&lt;exclusions&gt;</span>
+    <span class="nt">&lt;exclusion&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>selenium-java<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;/exclusion&gt;</span>
+  <span class="nt">&lt;/exclusions&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>selenium-java<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>${selenium.version.you.require}<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<h6 id="maven-repository-httpsmvnrepositorycomartifactioappiumjava-client">Maven Repository: <a href="https://mvnrepository.com/artifact/io.appium/java-client">https://mvnrepository.com/artifact/io.appium/java-client</a><a class="headerlink" href="#maven-repository-httpsmvnrepositorycomartifactioappiumjava-client" title="Permanent link"></a></h6>
+<p>配置或下载jar包皆可</p>
 <hr />
 <h2 id="androidappium">二、Android端Appium环境运行测试：<a class="headerlink" href="#androidappium" title="Permanent link"></a></h2>
 <h5 id="1android">1.找一个Android测试机并设置好：<a class="headerlink" href="#1android" title="Permanent link"></a></h5>
@@ -1202,4 +1290,5 @@ appActivity：被测app的启动activity名，获取方法见3.2。
   <span class="nt">&quot;appActivity&quot;</span><span class="p">:</span> <span class="s2">&quot;.biz.LaunchHomeActivity&quot;</span>
 <span class="p">}</span>
 </pre></div>
-待补充</p></article></body></html>
+待补充</p>
+<p><a href="https://appium.io/docs/en/about-appium/getting-started/">Getting Started</a></p></article></body></html>

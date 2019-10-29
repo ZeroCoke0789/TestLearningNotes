@@ -12,7 +12,7 @@
 
 ---
 
-## 一、Appium源码安装：
+## 一、Appium Server源码安装：
 
 ##### 1.从appium官网下载最新appium源码：
     https://github.com/appium/appium-desktop/releases/latest
@@ -45,6 +45,67 @@ Appium Install：
     `--registry=https://registry.npm.taobao.org`  
 Chromedriver Install：  
     `--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver`
+
+---
+
+## 二、下载安装Appium Client
+
+[AppiumServer&AppiumClient&AppiumGUI 分别是什么？有什么区别？](https://testerhome.com/topics/11101)
+
+appium server是一个web接口服务，它只管接受http请求，而负责将各个语言的测试脚本翻译成appium的http请求与server端通讯的程序，叫appium client。想要运行Appium测试，还需要下载该程序。
+
+其各client的Github子项目地址如下：
+
+| Language/Framework | Github Repo and Installation Instructions |
+| -- | -- |
+| Ruby | https://github.com/appium/ruby_lib |
+| Python | https://github.com/appium/python-client | 
+| Java | https://github.com/appium/java-client |
+| JavaScript (Node.js) | https://github.com/admc/wd |
+| Objective C | https://github.com/appium/selenium-objective-c |
+| PHP | https://github.com/appium/php-client |
+| C# (.NET) | https://github.com/appium/appium-dotnet-driver |
+| RobotFramework | https://github.com/jollychang/robotframework-appiumlibrary |
+
+#### Java:
+
+###### Maven
+Add the following to pom.xml:
+
+```xml
+<dependency>
+  <groupId>io.appium</groupId>
+  <artifactId>java-client</artifactId>
+  <version>${version.you.require}</version>
+  <scope>test</scope>
+</dependency>
+```
+If it is necessary to change the version of Selenium then you can configure pom.xml like following:
+
+```xml
+<dependency>
+  <groupId>io.appium</groupId>
+  <artifactId>java-client</artifactId>
+  <version>${version.you.require}</version>
+  <scope>test</test>
+  <exclusions>
+    <exclusion>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>
+
+<dependency>
+  <groupId>org.seleniumhq.selenium</groupId>
+  <artifactId>selenium-java</artifactId>
+  <version>${selenium.version.you.require}</version>
+</dependency>
+```
+
+###### Maven Repository: https://mvnrepository.com/artifact/io.appium/java-client
+
+配置或下载jar包皆可
 
 ---
 
@@ -106,4 +167,6 @@ adb logcat | grep "Displayed"
 }
 ```
 待补充
+
+[Getting Started](https://appium.io/docs/en/about-appium/getting-started/)
 
