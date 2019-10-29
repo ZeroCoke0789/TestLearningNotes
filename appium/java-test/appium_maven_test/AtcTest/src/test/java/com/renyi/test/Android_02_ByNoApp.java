@@ -72,15 +72,6 @@ public class Android_02_ByNoApp {
 
 	@Test
 	public void test() {
-		Writer out;
-		try {
-			out = new FileWriter(new File("getPageSource.txt"));
-			out.write(driver.getPageSource());
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		// 登录页-账号输入框 com.che168.autotradercloud:id/itv_account
 		// 直接找
 		// WebElement el1 =
@@ -130,6 +121,17 @@ public class Android_02_ByNoApp {
 			e.printStackTrace();
 		} finally {
 			System.out.println("screen shot finished, it's in " + currentPath + " folder");
+		}
+	}
+
+	private void savePageSource() {
+		Writer out;
+		try {
+			out = new FileWriter(new File("getPageSource.txt"));
+			out.write(driver.getPageSource());
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
