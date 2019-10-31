@@ -40,7 +40,7 @@ else
     pkg_name=`aapt dump badging "./${apk_name}" | grep package \
     | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
     adb uninstall ${pkg_name} | adb install -r ${apk_name}
-fi && adb shell am start -S com.che168.autotradercloud/.launch.LaunchActivity 
+fi && adb shell am start -S -W com.che168.autotradercloud/.launch.LaunchActivity 
 
 apk_name=AutoTraderCloud_csy.apk &&
 if [ ! -f ${apk_name} ]; then
@@ -54,11 +54,14 @@ fi
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
-## 测试App启动速度
-adb shell am start -S -W -R 11 com.che168.autotradercloud/.launch.LaunchActivity
+## 测试App启动时间（WaitTime）
+# 冷启动
+adb shell am start -S -W com.che168.autotradercloud/.launch.LaunchActivity
+# 热启动（启动后运行）
+adb shell am start -W com.che168.autotradercloud/.launch.LaunchActivity
 
-## 测试App启动速度：重复20次，求平均值
-adb shell am start -S -W -R 21 com.che168.autotradercloud/.launch.LaunchActivity > ts.log
+## 测试App重复20次的平均启动时间（WaitTime）
+adb shell am start -S -W -R 11 com.che168.autotradercloud/.launch.LaunchActivity > ts.log
 cat ts.log | grep -E "(ThisTime: [0-9]+)" | awk '{sum += $2}'END'{print "ThisTimeAvg: " sum/NR}'
 cat ts.log | grep -E "(TotalTime: [0-9]+)" | awk '{sum += $2}'END'{print "TotalTimeAvg: " sum/NR}'
 cat ts.log | grep -E "(WaitTime: [0-9]+)" | awk '{sum += $2}'END'{print "WaitTimeAvg: " sum/NR}'
