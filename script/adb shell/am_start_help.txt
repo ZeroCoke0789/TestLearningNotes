@@ -1,0 +1,32 @@
+am start: start an Activity.
+Options are:
+    -D: enable debugging
+    -N: enable native debugging
+    -W: wait for launch to complete
+    --start-profiler <FILE>: start profiler and send results to <FILE>
+    --sampling INTERVAL: use sample profiling with INTERVAL microseconds between samples (use with --start-profiler)
+    -P <FILE>: like above, but profiling stops when app goes idle
+    -R: repeat the activity launch <COUNT> times.  Prior to each repeat, the top activity will be finished.
+    -S: force stop the target app before starting the activity
+    --track-allocation: enable tracking of object allocations
+    --user <USER_ID> | current: Specify which user to run as; if not specified then run as the current user.
+    --stack <STACK_ID>: Specify into which stack should the activity be put.
+
+---
+
+adb shell am start -S -W com.che168.autotradercloud/.launch.LaunchActivity
+
+# 用不了，没开debug模式：java.lang.SecurityException: Process not debuggable
+adb shell am start -S -W --start-profiler //data/local/tmp/atc_launch_time.txt com.che168.autotradercloud/.launch.LaunchActivity
+
+adb shell am start -S -W -R 21 com.che168.autotradercloud/.launch.LaunchActivity > ts.log
+
+cat ts.log | grep -E "(ThisTime: [0-9]+)|(TotalTime: [0-9]+)|(WaitTime: [0-9]+)"
+
+cat ts.log | grep -E "(ThisTime: [0-9]+)"
+
+cat ts.log | grep -E "(ThisTime: [0-9]+)" | awk '{print $2}'
+
+cat ts.log | grep -E "(ThisTime: [0-9]+)" | awk '{sum += $2}'END'{print "ThisTimeAvg: " sum/NR}' &&
+cat ts.log | grep -E "(TotalTime: [0-9]+)" | awk '{sum += $2}'END'{print "TotalTimeAvg: " sum/NR}' &&
+cat ts.log | grep -E "(WaitTime: [0-9]+)" | awk '{sum += $2}'END'{print "WaitTimeAvg: " sum/NR}' &&
