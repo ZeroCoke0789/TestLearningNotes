@@ -1,3 +1,6 @@
+## 无线adb连接
+
+# 1）检测是否只有1个设备
 device_list=`adb devices | awk '{if(NR>1 && $0!~"^$") print $0}'` && 
 num=`echo "$device_list" | awk '{if($0!~"^$") print $0}' | wc -l` &&
 if [ $num -eq 0 ]; then
@@ -9,7 +12,7 @@ else
     echo "OK，当前只连接了1个设备"
     echo "$device_list"
 fi
-
+# 2）adb连接
 sdk_num=`adb shell getprop ro.build.version.sdk` &&
 if [ $sdk_num -eq 19 ]; then
     ip=`adb shell netcfg 2>/dev/null | grep wlan0 | awk '{print $3}' | awk -F"/" '{print $1}'`
@@ -22,15 +25,9 @@ adb connect $ip
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
-## 输出apk对应的package名
-apk_name=AutoTraderCloud_beta.apk &&
-if [ ! -f ${apk_name} ]; then
-    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
-else
-    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
-    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` \
-    && echo $pkg_name
-fi
+## 输出apk对应的package名和launch activity名
+aapt dump badging "AutoTraderCloud_beta_v1967.apk" |
+grep -E "(package:)|(launchable-activity:)" | grep -o "name='[^']*" | awk -F"'" '{print "name="$2}'
 
 ## 重装包
 apk_name=AutoTraderCloud_beta_v1967.apk &&
@@ -40,7 +37,7 @@ else
     pkg_name=`aapt dump badging "./${apk_name}" | grep package \
     | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
     adb uninstall ${pkg_name} | adb install -r ${apk_name}
-fi && adb shell am start -S -W com.che168.autotradercloud/.launch.LaunchActivity 
+fi && adb shell am start "${pkg_name}/.launch.LaunchActivity" 
 
 apk_name=AutoTraderCloud_csy.apk &&
 if [ ! -f ${apk_name} ]; then
@@ -106,18 +103,22 @@ adb logcat | awk '{if($0!~"^$") print $0}'  >> log1.txt
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
+# adb用浏览器打开一个网页
 adb shell am start -a android.intent.action.VIEW -d http://athm.cn/h64utbc
 http://athm.cn/G2TkBZb
 
+# adb导出手机相册照片
 adb pull //sdcard/DCIM/Camera ./ \
 | adb pull //sdcard/DCIM/Screenshots ./ \
 | adb pull //sdcard/pictures/Screenshots ./ \
 | adb pull //sdcard/pictures/Camera ./
 
+# adb清空相册照片
 adb shell rm //sdcard/DCIM/Screenshots/*
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
+# adb monkey
 adb shell monkey -p com.che168.autotradercloud --pct-touch 40 --pct-motion 25 --pct-appswitch 10 --pct-rotation 5 -s 6666 --throttle 400 --ignore-crashes --ignore-timeouts -v 500000
 
 com.che168.autotradercloud/.launch.LaunchActivity: +187ms
