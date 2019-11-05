@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: zerocoke.study.Junit4DemoOrderTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in zerocoke.study.Junit4DemoOrderTest
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in zerocoke.study.Junit4DemoOrderTest
 testDemoA(zerocoke.study.Junit4DemoOrderTest)  Time elapsed: 0 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4DemoOrderTest.testDemoA(Junit4DemoOrderTest.java:30)

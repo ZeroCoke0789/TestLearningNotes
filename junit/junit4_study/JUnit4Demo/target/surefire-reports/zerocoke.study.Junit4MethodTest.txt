@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: zerocoke.study.Junit4MethodTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.013 s <<< FAILURE! - in zerocoke.study.Junit4MethodTest
-testDemoA(zerocoke.study.Junit4MethodTest)  Time elapsed: 0.004 s  <<< FAILURE!
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.004 s <<< FAILURE! - in zerocoke.study.Junit4MethodTest
+testDemoA(zerocoke.study.Junit4MethodTest)  Time elapsed: 0.001 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4MethodTest.testDemoA(Junit4MethodTest.java:58)
 
