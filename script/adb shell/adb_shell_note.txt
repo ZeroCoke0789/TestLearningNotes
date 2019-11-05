@@ -1,6 +1,4 @@
-## 无线adb连接
-
-# 1）检测是否只有1个设备
+## 无线adb连接-1）检测是否只有1个设备
 device_list=`adb devices | awk '{if(NR>1 && $0!~"^$") print $0}'` && 
 num=`echo "$device_list" | awk '{if($0!~"^$") print $0}' | wc -l` &&
 if [ $num -eq 0 ]; then
@@ -12,7 +10,7 @@ else
     echo "OK，当前只连接了1个设备"
     echo "$device_list"
 fi
-# 2）adb连接
+# 无线adb连接-2）adb连接
 sdk_num=`adb shell getprop ro.build.version.sdk` &&
 if [ $sdk_num -eq 19 ]; then
     ip=`adb shell netcfg 2>/dev/null | grep wlan0 | awk '{print $3}' | awk -F"/" '{print $1}'`
