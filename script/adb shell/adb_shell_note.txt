@@ -10,6 +10,7 @@ else
     echo "OK，当前只连接了1个设备"
     echo "$device_list"
 fi
+
 # 无线adb连接-2）adb连接
 sdk_num=`adb shell getprop ro.build.version.sdk` &&
 if [ $sdk_num -eq 19 ]; then
@@ -29,22 +30,13 @@ grep -E "(package:)|(launchable-activity:)" | grep -o "name='[^']*" | awk -F"'" 
 
 ## 重装包
 apk_name=AutoTraderCloud_beta_v1967.apk &&
-if [ ! -f ${apk_name} ]; then
-    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
-else
-    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
-    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
-    adb uninstall ${pkg_name} | adb install -r ${apk_name}
+if [ ! -f ${apk_name} ]; then echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
+else pkg_name=`aapt dump badging "./${apk_name}" | grep package | grep -o "name='[^']*" | awk -F"'" '{print $2}'` && adb uninstall ${pkg_name} | adb install -r ${apk_name}
 fi && adb shell am start "${pkg_name}/.launch.LaunchActivity" 
 
 apk_name=AutoTraderCloud_csy.apk &&
-if [ ! -f ${apk_name} ]; then
-    echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
-else
-    pkg_name=`aapt dump badging "./${apk_name}" | grep package \
-    | grep -o "name='[^']*" | awk -F"'" '{print $2}'` &&
-    adb uninstall ${pkg_name} \
-    | adb push ${apk_name} //sdcard/${apk_name}
+if [ ! -f ${apk_name} ]; then echo `pwd`"/${apk_name}文件不存在，请检查路径是否正确。"
+else pkg_name=`aapt dump badging "./${apk_name}" | grep package | grep -o "name='[^']*" | awk -F"'" '{print $2}'` && adb uninstall ${pkg_name} | adb push ${apk_name} //sdcard/${apk_name}
 fi
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
