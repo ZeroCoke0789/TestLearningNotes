@@ -55,7 +55,7 @@ cat ts.log | grep -E "(WaitTime: [0-9]+)" | awk '{sum += $2}'END'{print "WaitTim
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
 
-## 查看某接口列表字段		[^,]*,   [^}]*}
+## 查看某接口列表字段		[^,]*,   [^}]*}		"xxx":[^,]*,
 curl 'xxx_http_url' | awk 'BEGIN{ RS="{" }{print $0}' | grep -o "fastpublic\"[^,]*"
 
 ## adb shell 截图
