@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: zerocoke.study.Junit4DemoChildren2Test
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.137 s <<< FAILURE! - in zerocoke.study.Junit4DemoChildren2Test
+testDemoAChildren(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError
+	at zerocoke.study.Junit4DemoChildren2Test.testDemoAChildren(Junit4DemoChildren2Test.java:52)
+
+testDemoA(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.031 s  <<< FAILURE!
+java.lang.AssertionError
+
