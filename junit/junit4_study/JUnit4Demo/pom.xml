@@ -62,6 +62,10 @@
           <version>2.22.1</version>
           <configuration>
                 <testFailureIgnore>false</testFailureIgnore>
+                <!-- 防止TestCase命名不规范 -->
+                <includes>
+                  <include>**/**.java</include>
+                </includes>
                 <argLine>
                     -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                 </argLine>
