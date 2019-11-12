@@ -1,23 +1,23 @@
 -------------------------------------------------------------------------------
 Test set: zerocoke.study.SuiteTest
 -------------------------------------------------------------------------------
-Tests run: 14, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.177 s <<< FAILURE! - in zerocoke.study.SuiteTest
-testDemo2(zerocoke.study.Junit4DemoTest)  Time elapsed: 0.005 s  <<< FAILURE!
+Tests run: 14, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.113 s <<< FAILURE! - in zerocoke.study.SuiteTest
+testDemo2(zerocoke.study.Junit4DemoTest)  Time elapsed: 0 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4DemoTest.testDemo2(Junit4DemoTest.java:21)
 
-testDemoAChildren(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.011 s  <<< FAILURE!
+testDemoAChildren(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.006 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4DemoChildren2Test.testDemoAChildren(Junit4DemoChildren2Test.java:52)
 
-testDemoA(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.01 s  <<< FAILURE!
+testDemoA(zerocoke.study.Junit4DemoChildren2Test)  Time elapsed: 0.019 s  <<< FAILURE!
 java.lang.AssertionError
 
-testDemoA(zerocoke.study.Junit4MethodTest)  Time elapsed: 0.014 s  <<< FAILURE!
+testDemoA(zerocoke.study.Junit4MethodTest)  Time elapsed: 0.012 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4MethodTest.testDemoA(Junit4MethodTest.java:58)
 
-testDemoA(zerocoke.study.Junit4DemoChildrenTest)  Time elapsed: 0.003 s  <<< FAILURE!
+testDemoA(zerocoke.study.Junit4DemoChildrenTest)  Time elapsed: 0.005 s  <<< FAILURE!
 java.lang.AssertionError
 	at zerocoke.study.Junit4DemoChildrenTest.testDemoA(Junit4DemoChildrenTest.java:62)
 

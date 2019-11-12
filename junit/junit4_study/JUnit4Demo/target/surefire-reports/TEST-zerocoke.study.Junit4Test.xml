@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="zerocoke.study.Junit4DemoChildren2Test" time="0.047" tests="6" errors="0" skipped="0" failures="2">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="zerocoke.study.Junit4Test" time="0.01" tests="3" errors="0" skipped="0" failures="1">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -59,29 +59,16 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="56.0"/>
   </properties>
-  <testcase name="testDemoBChildren" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.005"/>
-  <testcase name="testDemoAChildren" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.007">
+  <testcase name="testDemoA" classname="zerocoke.study.Junit4Test" time="0.002">
     <failure type="java.lang.AssertionError">java.lang.AssertionError
-	at zerocoke.study.Junit4DemoChildren2Test.testDemoAChildren(Junit4DemoChildren2Test.java:52)
+	at zerocoke.study.Junit4Test.testDemoA(Junit4Test.java:58)
 </failure>
-    <system-out><![CDATA[--我是@before，用例执行前先到我这--
---我是Children@before，用例执行前先到我这--
-Children testDemoA
---我是Children@after，用例执行后到我这--
---我是@after，用例执行后到我这--
-]]></system-out>
-  </testcase>
-  <testcase name="testDemoCChildren" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.006"/>
-  <testcase name="testDemoA" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.004">
-    <failure type="java.lang.AssertionError">java.lang.AssertionError
-</failure>
-    <system-out><![CDATA[--我是@before，用例执行前先到我这--
---我是Children@before，用例执行前先到我这--
+    <system-out><![CDATA[==我是@BeforeClass，我是运行第一步==
+--我是@before，用例执行前先到我这--
 testDemoA
---我是Children@after，用例执行后到我这--
 --我是@after，用例执行后到我这--
 ]]></system-out>
   </testcase>
-  <testcase name="testDemoB" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.006"/>
-  <testcase name="testDemoC" classname="zerocoke.study.Junit4DemoChildren2Test" time="0.011"/>
+  <testcase name="testDemoB" classname="zerocoke.study.Junit4Test" time="0.003"/>
+  <testcase name="testDemoC" classname="zerocoke.study.Junit4Test" time="0.002"/>
 </testsuite>

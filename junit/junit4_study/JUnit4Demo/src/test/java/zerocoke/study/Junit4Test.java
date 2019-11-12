@@ -8,6 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
+
 /**
  * Junit4Test
  *
@@ -46,9 +50,13 @@ public class Junit4Test {
         System.out.println("--我是@after，用例执行后到我这--");
     }
 
+    @DisplayName("测试用例： Junit4Test - TestDemoC")
+    @Description("演示打印描述")
     @Test
     public void testDemoC() {
+        @Step("步骤一：打印testDemoC");
         System.out.println("testDemoC");
+        @Step("步骤二：断言True");
         assertTrue(true);
     }
 
