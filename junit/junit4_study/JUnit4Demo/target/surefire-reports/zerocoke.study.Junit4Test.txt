@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: zerocoke.study.Junit4Test
--------------------------------------------------------------------------------
-Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.01 s <<< FAILURE! - in zerocoke.study.Junit4Test
-testDemoA(zerocoke.study.Junit4Test)  Time elapsed: 0.002 s  <<< FAILURE!
-java.lang.AssertionError
-	at zerocoke.study.Junit4Test.testDemoA(Junit4Test.java:58)
-

@@ -2,13 +2,21 @@ package zerocoke.study;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileInputStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 
@@ -50,23 +58,45 @@ public class Junit4Test {
         System.out.println("--我是@after，用例执行后到我这--");
     }
 
-    @DisplayName("测试用例： Junit4Test - TestDemoC")
-    @Description("演示打印描述")
     @Test
     public void testDemoC() {
-        @Step("步骤一：打印testDemoC");
         System.out.println("testDemoC");
-        @Step("步骤二：断言True");
         assertTrue(true);
     }
 
     @Test
+    @DisplayName("测试用例： Junit4Test - TestDemoC")
+    @Description("演示打印描述")
+    @Link("https://www.baidu.com")
+    @Link(name = "bugAddress", type = "mylink")
+    @Issue("002")
+    @Severity(SeverityLevel.CRITICAL)
     public void testDemoA() {
         System.out.println("testDemoA");
         assertTrue(false);
     }
 
+    // @Test
+    // @Step("login step")
+    // // @Attachment(value = "Page screenshot", type = "image/png")
+    // public void login() {
+    //     System.out.println("登录 666");
+    // }
+
     @Test
+    @Step("login2 step")
+    public void login2() {
+        System.out.println("登录 666");
+        try {
+            Allure.addAttachment("screenshot demo", "image/png", new FileInputStream("./测试开发demo.jpeg"), ".png");
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    @Step("login2 step")
     public void testDemoB() {
         System.out.println("testDemoB");
         assertTrue(true);

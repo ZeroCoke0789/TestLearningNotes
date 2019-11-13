@@ -81,9 +81,9 @@
           <configuration>
                 <testFailureIgnore>false</testFailureIgnore>
                 <!-- 防止TestCase命名不规范 -->
-                <includes>
+                <!-- <includes>
                   <include>**/**.java</include>
-                </includes>
+                </includes> -->
                 <argLine>
                     -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                 </argLine>
