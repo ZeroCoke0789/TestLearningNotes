@@ -1,24 +1,15 @@
 package zerocoke.study;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.FileInputStream;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
 import io.qameta.allure.junit4.DisplayName;
+import org.junit.*;
+
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Junit4Test
@@ -70,53 +61,42 @@ public class Junit4Test {
     @Link("https://www.baidu.com")
     @Link(name = "bugAddress", type = "mylink")
     @Issue("002")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.BLOCKER)
     public void testDemoA() {
         System.out.println("testDemoA");
         assertTrue(false);
     }
 
-    // @Test
-    // @Step("login step")
-    // // @Attachment(value = "Page screenshot", type = "image/png")
-    // public void login() {
-    //     System.out.println("登录 666");
-    // }
-
     @Test
-    @Step("login2 step")
-    public void login2() {
-        System.out.println("登录 666");
-        try {
-            Allure.addAttachment("screenshot demo", "image/png", new FileInputStream("./测试开发demo.jpeg"), ".png");
-        } catch (Exception e) {
-            //TODO: handle exception
-            e.printStackTrace();
-        }
+//    @Step("login step")    // @Step()会报错，禁止使用
+    public void testLogin() {
+        System.out.println("Run testLogin()");
     }
 
+//    @Test
+//    @Attachment(value = "Page screenshot", type = "image/png")
+//    public void testAttachment() {
+//        System.out.println("Run testAttachment()");
+//    }
+
+//    @Test
+//    public void testAttachment02() {
+//        System.out.println("Run testAttachment02()");
+//        Allure.addAttachment("My attachment", "My attachment content");
+//
+//        Path content = Paths.get("path-to-my-attachment-contnet");
+//        try {
+//            InputStream is = Files.newInputStream(content);
+//            Allure.addAttachment("My attachment", is);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     @Test
-    @Step("login2 step")
     public void testDemoB() {
         System.out.println("testDemoB");
         assertTrue(true);
     }
 
 }
-
-/**
- * App自动化测试用例管理：
- *
- * 基类的@BeforeClass：
- *  配置读取、配置Capability、初始化driver、安装App，PageObject初始化
- *
- * 集成的子类执行流程：
- *  @Before：启动并进入特定界面
- *  @Test：测试用例执行
- *  @After：回退到入口
- *  @BeforeClass：进图特定的tab子功能页面
- *  @AfterClass：关闭app
- *
- * 基类的@AfterClass：
- *  driver.quit
- */

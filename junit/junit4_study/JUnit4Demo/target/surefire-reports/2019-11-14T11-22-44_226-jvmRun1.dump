@@ -1,19 +1,16 @@
-# Created at 2019-11-13T20:57:53.782
-java.lang.VerifyError: Expecting a stackmap frame at branch target 57
+# Created at 2019-11-14T11:22:46.125
+java.lang.VerifyError: Expecting a stackmap frame at branch target 27
 Exception Details:
   Location:
-    zerocoke/study/Junit4Test.testDemoB()V @9: invokestatic
+    zerocoke/study/Junit4Test.testLogin()V @9: invokestatic
   Reason:
     Expected stackmap frame at this location.
   Bytecode:
-    0000000: b200 6b2a 2ab8 0071 4db8 0077 2cb6 007b
-    0000010: b200 0212 0bb6 0004 04b8 0009 120c 120d
-    0000020: bb00 0e59 120f b700 1012 11b8 0012 a700
-    0000030: 084c 2bb6 0014 a700 0d4e b800 772d b600
-    0000040: 7f2d bfb8 0077 b600 82b1               
+    0000000: b200 762a 2ab8 007c 4cb8 0082 2bb6 0086
+    0000010: b200 0212 0bb6 0004 a700 0d4d b800 822c
+    0000020: b600 8a2c bfb8 0082 b600 8db1          
   Exception Handler Table:
-    bci [28, 46] => handler: 49
-    bci [9, 57] => handler: 57
+    bci [9, 27] => handler: 27
 
 	at java.base/java.lang.Class.getDeclaredMethods0(Native Method)
 	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3171)
@@ -29,9 +26,9 @@ Exception Details:
 	at org.apache.maven.surefire.junit4.JUnit4Provider.scanClassPath(JUnit4Provider.java:309)
 	at org.apache.maven.surefire.junit4.JUnit4Provider.setTestsToRun(JUnit4Provider.java:189)
 	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:132)
-	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:383)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:344)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:125)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:417)
 
 

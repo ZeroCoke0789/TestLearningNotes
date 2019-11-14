@@ -2,7 +2,7 @@
 device_list=`adb devices | awk '{if(NR>1 && $0!~"^$") print $0}'` && 
 num=`echo "$device_list" | awk '{if($0!~"^$") print $0}' | wc -l` &&
 if [ $num -eq 0 ]; then
-    echo "当前没有连接中的设备"
+    echo "!!!当前没有连接中的设备!!!"
 elif [ $num -ge 2 ]; then
     echo "当前连接中设备有2个以上，无法连接，将取消所有设备的连接。"
     adb disconnect
@@ -23,7 +23,7 @@ adb tcpip 5555 &&
 adb connect $ip
 
 ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
-
+	
 ## 输出apk对应的package名和launch activity名
 aapt dump badging "AutoTraderCloud_beta_v1967.apk" |
 grep -E "(package:)|(launchable-activity:)" | grep -o "name='[^']*" | awk -F"'" '{print "name="$2}'
