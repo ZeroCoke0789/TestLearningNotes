@@ -4,11 +4,6 @@ import io.qameta.allure.*;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.*;
 
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import static org.junit.Assert.assertTrue;
 
 /**

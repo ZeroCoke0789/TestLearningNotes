@@ -9,20 +9,20 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Junit4Test 测试套件的执行顺序支持
+ * Junit4Demo 2.5 - Junit4Test 测试套件的执行顺序支持
  *
  * Junit4:
- *  @BeforeClass、@AfterClass
- *  @Before、@After
+ *   @BeforeClass、@AfterClass
+ *   @Before、@After
  *
  * TestNG:
- *  @BeforeClass
- *  @BeforeMethod
- *  @BeforeGroup、@BeforeSuite
+ *   @BeforeClass
+ *   @BeforeMethod
+ *   @BeforeGroup、@BeforeSuite
  *
  * Junit5:
- *  @BeforeClass
- *  @BeforeEach
+ *   @BeforeClass
+ *   @BeforeEach
  */
 public class Junit4MethodTest {
 

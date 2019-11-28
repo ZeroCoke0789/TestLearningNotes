@@ -9,14 +9,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Junit4DemoChildrenTest
+ * Junit4Demo 2.6 - Junit4DemoChildrenTest 继承关系下的测试流程02
  *
- * 继承关系下的测试流程： 将子类中的方法名进行修改，使其与父类方法名不同，再运行子类.
+ * 继承时子类方法的使用方法：
+ *   将子类中的方法名进行修改，使其与父类方法名不同，再运行子类.
  *
- * 运行结果：
- *  除父类@Test方法外，会先执行父类中方法，再执行子类中的方法。
- *  @BeforeClass --> @ChildrenBeforeClass --> @ChildrenTest
- *  @AfterClass  <-- @ChildrenAfterClass  <-- @ChildrenTest
+ * 运行结果（子类方法与方法不重名时）：
+ *   除父类@Test方法外，会先执行父类中方法，再执行子类中的方法。
+ *
+ * 注释执行顺序：
+ *   @BeforeClass --> @ChildrenBeforeClass --> @ChildrenTest
+ *   @AfterClass <-- @ChildrenAfterClass <-- @ChildrenTest
  */
 public class Junit4DemoChildren2Test extends Junit4MethodTest {
 

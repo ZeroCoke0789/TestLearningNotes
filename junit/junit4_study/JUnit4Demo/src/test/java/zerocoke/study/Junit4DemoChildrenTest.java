@@ -9,24 +9,22 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Junit4DemoChildrenTest
- *
- * 继承关系下的测试流程：
+ * Junit4Demo 2.6 - Junit4DemoChildrenTest 继承关系下的测试流程：
  *
  * 流程顺序：
- *  父类@BeforeClass
- *  子类@BeforeClass
- *  父类@Before
- *  子类@Before
- *  子类@Test
- *  父类@Test
- *  子类@After
- *  父类@After
- *  子类@AfterClass
- *  父类@AfterClass
+ *   父类@BeforeClass
+ *   子类@BeforeClass
+ *   父类@Before
+ *   子类@Before
+ *   子类@Test
+ *   父类@Test
+ *   子类@After
+ *   父类@After
+ *   子类@AfterClass
+ *   父类@AfterClass
  *
- * 运行结果：
- *  子类会将与父类中一样的方法进行覆盖，只执行子类中的方法
+ * 运行结果（子类方法与方法重名时）：
+ *   子类会将与父类中一样的方法进行覆盖，只执行子类中的方法
  */
 public class Junit4DemoChildrenTest extends Junit4MethodTest {
 
