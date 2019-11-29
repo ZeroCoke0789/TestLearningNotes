@@ -1,4 +1,4 @@
-package zerocoke.study.SuiteTest02;
+package zerocoke.study.CategoriesTest;
 
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;

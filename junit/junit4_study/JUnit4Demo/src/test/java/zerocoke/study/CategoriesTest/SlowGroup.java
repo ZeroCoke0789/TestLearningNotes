@@ -1,4 +1,4 @@
-package zerocoke.study.SuiteTest02;
+package zerocoke.study.CategoriesTest;
 
 /**
  * SlowGroup
