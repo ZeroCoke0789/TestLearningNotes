@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 /**
- * Junit4Demo 2.4 - Junit4MethodOrderTest 用例间的执行顺序
+ * Junit4Demo 2.4 - Junit4MethodSortersTest 用例间的执行顺序
  *
  * Junit4的执行顺序：
  *   Default 取决于反射方法获得的列表，顺序固定（不保险）
@@ -18,7 +18,7 @@ import org.junit.runners.MethodSorters;
  *   可以通过注解设置顺序Order
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Junit4DemoOrderTest {
+public class Junit4MethodSortersTest {
 
     @Test
     public void testDemoC() {
