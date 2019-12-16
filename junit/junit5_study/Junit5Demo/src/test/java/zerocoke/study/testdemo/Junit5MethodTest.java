@@ -1,13 +1,11 @@
-package zerocoke.study;
+package zerocoke.study.testdemo;
 
 import org.junit.jupiter.api.*;
 
 /**
- * Junit5 02 - Test Metheod Order
- *
- * 4）在测试类执行前后添加@BeforeAll和@AfterAll：
+ * Junit5 03 - @Method Test
  */
-public class Junit5MethodOrderTest {
+public class Junit5MethodTest {
 
     @BeforeAll
     static void beforeAll() {
@@ -20,13 +18,22 @@ public class Junit5MethodOrderTest {
     }
 
     @Test
+    @Disabled    // 5）在测试用例test1上加入注解@Disabled，使test1失效
+    @DisplayName("测试用例1")    // 6）分别将test1和test2用@DisplayName加上用例展示名称
     void test1() {
         System.out.println("junit5 test1() 运行");
     }
 
     @Test
+    @DisplayName("测试用例2")    // 6）分别将test1和test2用@DisplayName加上用例展示名称
     void test2() {
         System.out.println("junit5 test2() 运行");
+    }
+
+    @DisplayName("测试用例3")
+    @RepeatedTest(3)            // 7）对测试用例2加上注解@RepeatedTest,使其额外重复执行3次。用这个就不要用@Test了，用重复调用警告。
+    void test3() {
+        System.out.println("junit5 test3() 运行");
     }
 
     @AfterEach

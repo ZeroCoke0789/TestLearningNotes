@@ -1,4 +1,4 @@
-package zerocoke.study;
+package zerocoke.study.junit5demo;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

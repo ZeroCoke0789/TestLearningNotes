@@ -1,4 +1,4 @@
-package zerocoke.study;
+package zerocoke.study.junit5demo;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
  *
  * 3）添加用例@Test，再在用例执行前后添加@BeforeEach、@AfterEach:
  */
-public class Junit5DemoTest {
+public class Junit5DemoTest {    // 注意：类名要包含Test，否则Junit默认会跳过不带Test的测试Case。
 
     @BeforeEach
     void beforeEachTest() {
