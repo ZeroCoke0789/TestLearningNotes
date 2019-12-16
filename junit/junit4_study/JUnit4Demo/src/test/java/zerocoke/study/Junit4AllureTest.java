@@ -7,7 +7,7 @@ import org.junit.*;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Junit4Test
+ * Junit4AllureTest
  *
  * Junit4基础介绍：
  *   https://blog.csdn.net/weixin_43291944/article/details/101980554
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
  * Allure报告生成踩坑与持续集成方法：
  *   https://testerhome.com/topics/16998
  */
-public class Junit4Test {
+public class Junit4AllureTest {
 
     @BeforeClass
     public static void beforeAllTestCase() {
