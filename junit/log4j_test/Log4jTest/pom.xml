@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.atc.test</groupId>
+    <artifactId>AtcApiTest</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>AtcApiTest</name>
+    <!-- FIXME change it to the project's website -->
+    <url>http://www.example.com</url>
+
+    <properties>
+        <!-- 文件拷贝时的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 编译时的编码 -->
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <!-- 编译时的JDK版本 -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!--    <allure.version>1.4.16</allure.version>-->
+        <!--    <aspectj.version>1.8.10</aspectj.version>-->
+    </properties>
+
+    <dependencies>
+        <!-- groovy 使用依赖，暂时没用 -->
+        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.5.6</version>
+            <type>pom</type>
+        </dependency>
+
+        <!-- rest-assured 使用依赖 -->
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.0.0</version>
+            <scope>compile</scope>    <!-- 静态调用时需配上：scope=compile -->
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- 使用 new ObjectMapper(new YAMLFactory()) 依赖-->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
+        <!-- slf4j+log4j2  -->
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.28</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.2</version>
+        </dependency>
+
+        <!-- Junit 4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- allure junit4上 使用依赖 -->
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-junit4 -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit4</artifactId>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <!-- 配置文件目录     -->
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.java</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <!-- 是否替换资源中的属性-->
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/test/java</directory>
+                <includes>
+                    <include>**/*.java</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <!--<excludes>
+                    <exclude>**/*.properties</exclude>
+                    <exclude>com/test/aboutjar/*</exclude>
+                </excludes> -->
+                <!-- 是否替换资源中的属性-->
+                <filtering>false</filtering>
+            </resource>
+        </resources>
+
+        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+                <!-- mvn clean -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <!-- resources插件负责处理项目资源文件并拷贝到输出目录。Maven将main resources和test resources分开，main resources关联main source code，而test resources关联test source code。
+                    see https://my.oschina.net/u/2377110/blog/1584204 -->
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+                <!-- mvn test -->
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <!-- args setting -->
+                        <parallel>methods</parallel>
+                        <threadCount>10</threadCount>
+                        <argLine>-Dfile.encoding=UTF-8</argLine>
+                        <!-- <skip>true</skip> -->
+                        <!-- <testFailureIgnore>true</testFailureIgnore> -->
+                    </configuration>
+
+                    <!-- allure junit4 maven-surefire-plugin configuration
+                    <configuration>
+                      <testFailureIgnore>false</testFailureIgnore>
+                      <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                      </argLine>
+                      <properties>
+                        <property>
+                          <name>listener</name>
+                          <value>io.qameta.allure.junit4.AllureJunit4</value>
+                        </property>
+                      </properties>
+                    </configuration>
+                    <dependencies>
+                      <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                      </dependency>
+                    </dependencies>
+                     -->
+
+                </plugin>
+                <!-- 打包（jar）插件 -->
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.1.2</version>
+                </plugin>
+                <!-- mvn install：
+                将项目本身编译并打包到本地仓库，这样其他项目引用本项目的jar包时不用去私服上下载jar包，
+                直接从本地就可以拿到刚刚编译打包好的项目的jar包，避免每次都需要重新往私服发布jar包的痛苦； -->
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <!-- mvn deploy：可以将构建出的构件直接部署到POM配置的远程库中。在Maven的deploy阶段使用。 -->
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+                <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.8.2</version>
+                </plugin>
+                <!-- see http://maven.apache.org/plugins/maven-project-info-reports-plugin/ -->
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <!-- allure report maven plugin支持 -->
+                <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-maven
+                <plugin>
+                    <groupId>io.qameta.allure</groupId>
+                    <artifactId>allure-maven</artifactId>
+                    <version>2.10.0</version>
+                    <configuration>
+                        <properties>
+                            <reportVersion>2.7.0</reportVersion>
+                            <reportDirectory>allure-report</reportDirectory>
+                        </properties>
+                    </configuration>
+                </plugin>
+                -->
+
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
