@@ -94,3 +94,21 @@ noReset：是否不重置应用程序状态，true or false，默认true。
   "noReset": "true"
 }
 ```
+
+###### Android常用配置
+```json
+{
+  "platformName": "Android",
+  "platformVersion": "7.0",
+  "deviceName": "Samsung S6",
+  "appPackage": "com.che168.autotradercloud",
+  "appActivity": ".launch.LaunchActivity",
+  "noSign": true,
+  "unicodeKeyboard": true,
+  "resetKeyboard": true,
+  "noReset": false,
+  "autoGrantPermissions": true,
+  "newCommandTimeout": 600
+}
+
+```
