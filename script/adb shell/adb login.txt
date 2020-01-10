@@ -1,0 +1,12 @@
+app登录：
+adb shell input text 15611110056 && adb shell input keyevent 61 &&
+adb shell input text tt123456 && adb shell input keyevent 61 &&
+read width high <<< $(echo `adb shell wm size | awk -F": " '{print $2}'` | awk -F"x" '{print int($1),int($2)}') &&
+adb shell input tap $((width/2)) $((high*6/10))
+
+
+
+
+
+adb shell input text V8975132165613215
+adb shell input text LDCB13X41C2000112
