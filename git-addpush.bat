@@ -1,7 +1,7 @@
 @echo off
 
 echo ############### param_ready ###############
-rem 获取今天日期（格式：11/23/2017 Thu），然后转换为commit_content
+::获取今天日期（格式：11/23/2017 Thu），然后转换为commit_content
 echo %date%
 set location=CompanySubmit
 set commit=更新
