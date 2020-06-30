@@ -992,7 +992,34 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*GitHub*/
+</style><script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script><script>MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: ".*|",
+    processClass: "arithmatex"
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  showProcessingMessages: false,
+  messageStyle: 'none'
+});
+</script><style>/*GitHub*/
 .codehilite {background-color:#fff;color:#333333;}
 .codehilite .hll {background-color:#ffffcc;}
 .codehilite .c{color:#999988;font-style:italic}
@@ -1055,240 +1082,188 @@ body .markdown-body
 .codehilite .vi{color:teal}
 .codehilite .il{color:#009999}
 .codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><title>Appium安装_31_双平台_appium-server源码安装及Android端环境安装</title></head><body><article class="markdown-body"><h1 id="appium_31__appium-serverandroid">Appium安装_31_双平台_appium-server源码安装及Android端环境安装<a class="headerlink" href="#appium_31__appium-serverandroid" title="Permanent link"></a></h1>
-<p>介绍在Windows电脑或Mac电脑上，若想通过源码安装appium-server并用其进行自动化测试，在对Android端的安装及运行测试的过程。<br />
-注意：<br />
-1.因非Mac系统不能进行iOS端自动化测试，因此Windows平台上只能进行Android端测试。<br />
-2.此介绍只讲解Appium的安装过程，关于npm、adb等依赖不做介绍，想装请见《安装准备》文档。<br />
-3.以下介绍参考自 <a href="https://testerhome.com/topics/5874">https://testerhome.com/topics/5874</a> 文章，谢谢分享。</p>
+</style><title>Appium安装（旧版01）</title></head><body><article class="markdown-body"><h2 id="_1">准备工作：<a class="headerlink" href="#_1" title="Permanent link"></a></h2>
+<p>基本工具：brew／npm／SDKMAN</p>
+<p>brew命令介绍：
+1.brew update：更新brew
+2.brew install xxx：安装xxx
+3.brew uninstall xxx：卸载xxx
+4.brew upgrade xxx：更新xxx版本</p>
+<p>npm命令安装：
+方法1: brew install node，安装完即有node和npm。
+方法2: 用官网下载的pkg包安装</p>
+<p>npm命令介绍：
+1.npm install -g xxx：(全局)安装xxx
+2.npm uninstall xxx：卸载xxx
+建议：npm安装模块时要指定镜像，这样下载的快，但不建议使用cnpm，因为cnpm有时候不好用。
+npm install -g xxx &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a></p>
+<p>============================================================</p>
+<h2 id="appium">Appium命令行安装：<a class="headerlink" href="#appium" title="Permanent link"></a></h2>
+<p>1.brew安装node：brew install node
+2.npm安装appium：npm install -g appium
+3.npm安装appium client：npm install wd
+4.npm安装appium-doctor：npm install -g appium-doctor
+5.输入“appium-doctor”，查看appium环境是不是配好了。
+6.输入“appium -v”，测试一下appium是否安好了。</p>
+<p>若是下载appium-chromedriver下载不下来，建议直接下载源码安装。如以下两个下载超时时：
+1）npm ERR! appium-chromedriver@3.1.4 install: <code>node install-npm.js</code>
+info Chromedriver Install Downloading <a href="https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip">https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip</a>&hellip;
+RequestError: Error: connect ETIMEDOUT 172.217.160.112:443
+&hellip;
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! appium-chromedriver@3.1.4 install: <code>node install-npm.js</code>
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the appium-chromedriver@3.1.4 install script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+2）UiAutomator2 Server test APK v0.3.0下载超时：
+info UiAutomator2 downloading UiAutomator2 Server test APK v0.3.0 : <a href="https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk">https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk</a></p>
+<h2 id="appium_1">Appium源码安装：<a class="headerlink" href="#appium_1" title="Permanent link"></a></h2>
+<p>（参考 <a href="https://testerhome.com/topics/5874">https://testerhome.com/topics/5874</a> 文章）
+1.安装cnpm：npm install -g cnpm &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+2.官网下载最新appium版本源码：
+<a href="https://github.com/appium/appium-desktop/releases/latest">https://github.com/appium/appium-desktop/releases/latest</a>
+3.将下载的zip源码解压，放到想放的地方。
+4.cd进入appium源码目录，执行“cnpm install”安装node依赖。
+5.输入“cnpm link”，将appium link到系统。
+6.npm安装appium client：npm install wd
+7.npm安装appium-doctor：npm install -g appium-doctor
+8.输入“appium-doctor”，查看appium环境是不是配好了。
+9.输入“appium -v”，测试一下appium是否安好了。</p>
+<p>下载不下来时两必备参数：
+Appium Install：
+    &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+Chromedriver Install：
+    &ndash;chromedriver_cdnurl=<a href="http://cdn.npm.taobao.org/dist/chromedriver">http://cdn.npm.taobao.org/dist/chromedriver</a></p>
+<p>============================================================</p>
+<h2 id="appium_2">安装Appium驱动：<a class="headerlink" href="#appium_2" title="Permanent link"></a></h2>
+<h4 id="android">Android驱动安装：<a class="headerlink" href="#android" title="Permanent link"></a></h4>
+<p>1.安装appium-android-driver:
+npm install appium-android-driver &ndash;chromedriver_cdnurl=<a href="http://cdn.npm.taobao.org/dist/chromedriver">http://cdn.npm.taobao.org/dist/chromedriver</a>
+2.安装appium-chromedriver:
+npm install appium-chromedriver &ndash;chromedriver_version=&rdquo;2.16&rdquo; &ndash;chromedriver_cdnurl=<a href="http://npm.taobao.org/mirrors/chromedriver">http://npm.taobao.org/mirrors/chromedriver</a>
+(安装appium时指定chromedriver安装：
+npm install appium &ndash;chromedriver_cdnurl=<a href="http://npm.taobao.org/mirrors/chromedriver">http://npm.taobao.org/mirrors/chromedriver</a>)</p>
+<h4 id="ios">iOS驱动安装：<a class="headerlink" href="#ios" title="Permanent link"></a></h4>
+<h5 id="xcode7ios93uiautomation">Xcode7&amp;iOS9.3以下驱动安装（引擎UIAutomation）：<a class="headerlink" href="#xcode7ios93uiautomation" title="Permanent link"></a></h5>
+<p>Simulator Setup:
+1.安装authorize-ios: 
+    npm install -g authorize-ios &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+    sudo authorize-ios
+2.安装appium-ios-driver: 
+    npm install appium-ios-driver &ndash;registry=<a href="https://registry.npm.taobao.org">https://registry.npm.taobao.org</a>
+3.配置iwd: 
+Inside the repo, run the xcode-iwd.sh script included in the bin dir, passing it several arguments: 
+(1) the path to the Xcode app you are using. 
+(2) The path to the appium-instruments directory. 
+For example:
+    sh ./bin/xcode-iwd.sh /Applications/Xcode.app /Users/me/appium-instruments/</p>
+<p>Real Device Setup:
+1.build app。
+2.安装ideviceinstaller: 
+    brew install libimobiledevice
+3.利用libimobiledevice安装app: 
+    ideviceinstaller -u <UDID of your device> -i <path to your built app></p>
+<p>Hybrid H5 App:
+1.安装ios-webkit-debug-proxy：
+    brew install ios-webkit-debug-proxy
+    <!-- brew uninstall ios-webkit-debug-proxy --></p>
 <hr />
-<div class="toc">
-<ul>
-<li><a href="#appium_31__appium-serverandroid">Appium安装_31_双平台_appium-server源码安装及Android端环境安装</a><ul>
-<li><a href="#appium-server">一、Appium Server源码安装：</a><ul>
-<li><a href="#1appiumappium">1.从appium官网下载最新appium源码：</a></li>
-<li><a href="#2appium">2.解压appium：</a></li>
-<li><a href="#3cdappiumnpm-installnode">3.cd进入appium源码目录，执行“npm install”安装node依赖：</a></li>
-<li><a href="#4appium-link">4.将appium link到系统：</a></li>
-<li><a href="#5npmappium-client">5.npm安装appium client：</a></li>
-<li><a href="#6npmappium-doctor">6.npm安装appium-doctor：</a></li>
-<li><a href="#7appium">7.检查appium是否安装好了：</a></li>
-<li><a href="#8appium">8.检查appium环境是不是都配好了：</a></li>
-<li><a href="#9">9.下载问题答疑：</a></li>
-</ul>
-</li>
-<li><a href="#appium-client">二、下载安装Appium Client</a><ul>
-<li><a href="#java">Java:</a><ul>
-<li><a href="#maven">Maven</a></li>
-<li><a href="#maven-repository-httpsmvnrepositorycomartifactioappiumjava-client">Maven Repository: https://mvnrepository.com/artifact/io.appium/java-client</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#androidappium">二、Android端Appium环境运行测试：</a><ul>
-<li><a href="#1android">1.找一个Android测试机并设置好：</a></li>
-<li><a href="#2app">2.找一个被测app:</a></li>
-<li><a href="#3">3.获取启动参数。</a><ul>
-<li><a href="#31-apkapppackageapk32">3.1 根据apk获取app对应的package名(有apk时可用，没有见3.2)：</a></li>
-<li><a href="#32-adb-logcatappactivity">3.2 利用adb logcat查询app的启动activity名：</a></li>
-</ul>
-</li>
-<li><a href="#4appium">4.启动appium服务：</a></li>
-<li><a href="#5app">5.运行测试脚本，启动被测App，开始测试：</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-<hr />
-<h2 id="appium-server">一、Appium Server源码安装：<a class="headerlink" href="#appium-server" title="Permanent link"></a></h2>
-<h5 id="1appiumappium">1.从appium官网下载最新appium源码：<a class="headerlink" href="#1appiumappium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>https://github.com/appium/appium-desktop/releases/latest
-从上面地址下载最新appium源码
-</pre></div>
-
-
-<h5 id="2appium">2.解压appium：<a class="headerlink" href="#2appium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>将下载的zip源码解压，放到想放的地方。
-</pre></div>
-
-
-<h5 id="3cdappiumnpm-installnode">3.cd进入appium源码目录，执行“npm install”安装node依赖：<a class="headerlink" href="#3cdappiumnpm-installnode" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`npm install --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="4appium-link">4.将appium link到系统：<a class="headerlink" href="#4appium-link" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`npm link`
-</pre></div>
-
-
-<h5 id="5npmappium-client">5.npm安装appium client：<a class="headerlink" href="#5npmappium-client" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`npm install wd --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="6npmappium-doctor">6.npm安装appium-doctor：<a class="headerlink" href="#6npmappium-doctor" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`npm install -g appium-doctor --registry=https://registry.npm.taobao.org`
-</pre></div>
-
-
-<h5 id="7appium">7.检查appium是否安装好了：<a class="headerlink" href="#7appium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`appium -v`
-</pre></div>
-
-
-<h5 id="8appium">8.检查appium环境是不是都配好了：<a class="headerlink" href="#8appium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>输入`appium-doctor`
-</pre></div>
-
-
-<h5 id="9">9.下载问题答疑：<a class="headerlink" href="#9" title="Permanent link"></a></h5>
-<p>下载不下来时两必备参数：<br />
-Appium Install：<br />
-<code>--registry=https://registry.npm.taobao.org</code><br />
-Chromedriver Install：<br />
-<code>--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver</code></p>
-<hr />
-<h2 id="appium-client">二、下载安装Appium Client<a class="headerlink" href="#appium-client" title="Permanent link"></a></h2>
-<p><a href="https://testerhome.com/topics/11101">AppiumServer&amp;AppiumClient&amp;AppiumGUI 分别是什么？有什么区别？</a></p>
-<p>appium server是一个web接口服务，它只管接受http请求，而负责将各个语言的测试脚本翻译成appium的http请求与server端通讯的程序，叫appium client。想要运行Appium测试，还需要下载该程序。</p>
-<p>其各client的Github子项目地址如下：</p>
-<table>
-<thead>
-<tr>
-<th>Language/Framework</th>
-<th>Github Repo and Installation Instructions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ruby</td>
-<td><a href="https://github.com/appium/ruby_lib">https://github.com/appium/ruby_lib</a></td>
-</tr>
-<tr>
-<td>Python</td>
-<td><a href="https://github.com/appium/python-client">https://github.com/appium/python-client</a></td>
-</tr>
-<tr>
-<td>Java</td>
-<td><a href="https://github.com/appium/java-client">https://github.com/appium/java-client</a></td>
-</tr>
-<tr>
-<td>JavaScript (Node.js)</td>
-<td><a href="https://github.com/admc/wd">https://github.com/admc/wd</a></td>
-</tr>
-<tr>
-<td>Objective C</td>
-<td><a href="https://github.com/appium/selenium-objective-c">https://github.com/appium/selenium-objective-c</a></td>
-</tr>
-<tr>
-<td>PHP</td>
-<td><a href="https://github.com/appium/php-client">https://github.com/appium/php-client</a></td>
-</tr>
-<tr>
-<td>C# (.NET)</td>
-<td><a href="https://github.com/appium/appium-dotnet-driver">https://github.com/appium/appium-dotnet-driver</a></td>
-</tr>
-<tr>
-<td>RobotFramework</td>
-<td><a href="https://github.com/jollychang/robotframework-appiumlibrary">https://github.com/jollychang/robotframework-appiumlibrary</a></td>
-</tr>
-</tbody>
-</table>
-<h4 id="java">Java:<a class="headerlink" href="#java" title="Permanent link"></a></h4>
-<h6 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link"></a></h6>
-<p>Add the following to pom.xml:</p>
-<p><div class="codehilite"><pre><span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>io.appium<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>java-client<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>${version.you.require}<span class="nt">&lt;/version&gt;</span>
-  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-If it is necessary to change the version of Selenium then you can configure pom.xml like following:</p>
-<div class="codehilite"><pre><span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>io.appium<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>java-client<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>${version.you.require}<span class="nt">&lt;/version&gt;</span>
-  <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/test&gt;</span>
-  <span class="nt">&lt;exclusions&gt;</span>
-    <span class="nt">&lt;exclusion&gt;</span>
-      <span class="nt">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="nt">&lt;/groupId&gt;</span>
-      <span class="nt">&lt;artifactId&gt;</span>selenium-java<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;/exclusion&gt;</span>
-  <span class="nt">&lt;/exclusions&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-
-<span class="nt">&lt;dependency&gt;</span>
-  <span class="nt">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="nt">&lt;/groupId&gt;</span>
-  <span class="nt">&lt;artifactId&gt;</span>selenium-java<span class="nt">&lt;/artifactId&gt;</span>
-  <span class="nt">&lt;version&gt;</span>${selenium.version.you.require}<span class="nt">&lt;/version&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</pre></div>
-
-<h6 id="maven-repository-httpsmvnrepositorycomartifactioappiumjava-client">Maven Repository: <a href="https://mvnrepository.com/artifact/io.appium/java-client">https://mvnrepository.com/artifact/io.appium/java-client</a><a class="headerlink" href="#maven-repository-httpsmvnrepositorycomartifactioappiumjava-client" title="Permanent link"></a></h6>
-<p>配置或下载jar包皆可</p>
-<hr />
-<h2 id="androidappium">二、Android端Appium环境运行测试：<a class="headerlink" href="#androidappium" title="Permanent link"></a></h2>
-<h5 id="1android">1.找一个Android测试机并设置好：<a class="headerlink" href="#1android" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>找个Android测试机，打开“开发者选项”和“USB调试”，配置adb运行环境，确保adb服务可运行。
-</pre></div>
-
-
-<h5 id="2app">2.找一个被测app:<a class="headerlink" href="#2app" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>找个apk包或将app直接安装在测试机上都行。
-</pre></div>
-
-
-<h5 id="3">3.获取启动参数。<a class="headerlink" href="#3" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>appium启动测试应用时，需要指定启动参数，如下：
-
-未安装app需要： 
-    platformName/platformVersion/deviceName/app，4个参数
-已安装app时需要： 
-    platformName/platformVersion/deviceName/appPackage/appActivity，5个参数
-
-参数说明：
-platformName：平台名称，Android还是iOS，必填；
-platformVersion：平台系统版本，如Android 5.0，必填。直接手机设置里查询就行。
-deviceName：设备名称，随便取，但必填。
-app：apk包的存放路径。
-appPackage：被测app的package名，获取方法见3.1或3.2。
-appActivity：被测app的启动activity名，获取方法见3.2。
-</pre></div>
-
-
-<h6 id="31-apkapppackageapk32">3.1 根据apk获取app对应的package名(有apk时可用，没有见3.2)：<a class="headerlink" href="#31-apkapppackageapk32" title="Permanent link"></a></h6>
-<p><div class="codehilite"><pre><span class="c1">## 输出apk对应的package名</span>
-<span class="nv">apk_name</span><span class="o">=</span>xxx.apk <span class="o">&amp;&amp;</span>
-<span class="k">if</span> <span class="o">[</span> ! -f <span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> <span class="sb">`</span><span class="nb">pwd</span><span class="sb">`</span><span class="s2">&quot;/</span><span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span><span class="s2">文件不存在，请检查路径是否正确。&quot;</span>
-<span class="k">else</span>
-    <span class="nv">pkg_name</span><span class="o">=</span><span class="sb">`</span>aapt dump badging <span class="s2">&quot;./</span><span class="si">${</span><span class="nv">apk_name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">|</span> grep package <span class="se">\</span>
-    <span class="p">|</span> grep -o <span class="s2">&quot;name=&#39;[^&#39;]*&quot;</span> <span class="p">|</span> awk -F<span class="s2">&quot;&#39;&quot;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$pkg_name</span>
-<span class="k">fi</span>
-</pre></div>
-<code>示例：钉钉appPackage=com.alibaba.android.rimet</code></p>
-<h6 id="32-adb-logcatappactivity">3.2 利用adb logcat查询app的启动activity名：<a class="headerlink" href="#32-adb-logcatappactivity" title="Permanent link"></a></h6>
-<p><div class="codehilite"><pre>adb logcat <span class="p">|</span> grep <span class="s2">&quot;Displayed&quot;</span>
-</pre></div>
-输入上面命令，再启动app，出现的第1个相同package的activity，即为启动activity名。<br />
-<code>示例：钉钉appActivity=.biz.LaunchHomeActivity</code></p>
-<h5 id="4appium">4.启动appium服务：<a class="headerlink" href="#4appium" title="Permanent link"></a></h5>
-<div class="codehilite"><pre>打开cmd，然后输入appium，启动appium服务即可。
-</pre></div>
-
-
-<h5 id="5app">5.运行测试脚本，启动被测App，开始测试：<a class="headerlink" href="#5app" title="Permanent link"></a></h5>
-<p><div class="codehilite"><pre><span class="p">{</span>
-  <span class="nt">&quot;platformName&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;platformVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;7.0&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;deviceName&quot;</span><span class="p">:</span> <span class="s2">&quot;Samsung S6&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;appPackage&quot;</span><span class="p">:</span> <span class="s2">&quot;com.alibaba.android.rimet&quot;</span><span class="p">,</span>
-  <span class="nt">&quot;appActivity&quot;</span><span class="p">:</span> <span class="s2">&quot;.biz.LaunchHomeActivity&quot;</span>
-<span class="p">}</span>
-</pre></div>
-待补充</p>
-<p><a href="https://appium.io/docs/en/about-appium/getting-started/">Getting Started</a></p></article></body></html>
+<h5 id="xcode8-ios10xcuitest">Xcode8 &amp; iOS10以上驱动安装（引擎用XCuiTest）：<a class="headerlink" href="#xcode8-ios10xcuitest" title="Permanent link"></a></h5>
+<p>1.安装Carthage: 
+    brew install carthage
+2.安装iOS命令行神器libimobiledevice: 
+    brew install &ndash;HEAD libimobiledevice -g
+    brew install ideviceinstaller -g
+3.安装ios-deploy: 
+    brew install ios-deploy
+4.For hybrid or web tests install: 
+    brew install ios-webkit-debug-proxy
+5.找到Appium里的WebDriverAgent项目: 
+5.1 在Appium目录里查找：
+    cd /Users/renyi/TestTools/appium
+    find . -iname WebDriverAgent
+    （得到“./node_modules/appium-xcuitest-driver/WebDriverAgent”）
+5.2 在Appium.app里查找：
+    find /Applications/Appium.app/Contents -iname WebDriverAgent
+    (得到“/Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-xcuitest-driver/WebDriverAgent”)
+6.安装WebDriverAgent项目依赖：
+6.1 进入WebDriverAgent目录：
+    cd xx/WebDriverAgent/
+6.1 运行下载依赖脚本：
+    ./Scripts/bootstrap.sh
+若运行报很多Error，如：
+    “Error: Unable to resolve path to module <code>js/http</code>, <code>js/tree</code> etc on running <code>./Scripts/bootstrap.sh</code>”
+可在命令末尾加“-d”参数运行：
+    ./Scripts/bootstrap.sh -d
+    （排查文章学习）
+7.使用Xcode工具对WebDriverAgent项目进行重签名：
+7.1 进入WebDriverAgent目录：
+    cd xx/WebDriverAgent/
+7.2 双击WebDriverAgent.xcodeproj，用Xcode打开。
+7.3 修改WebDriverAgentRunner-Target的签名信息（使用Xcode）：
+（1）General标签页-Signing：
+    修改Team和Signing Cerificate信息；
+（2）General标签页-Identity：
+    修改Bundel Identifier；
+或者 Build Settings标签页-Packaging：
+    修改Product Bundel Identifier；
+（3）Build Phases标签页-Copy Frameworks：
+    添加RoutingHTTPServer.framework框架（在Frameworks目录下）。
+7.4 修改另一个Target，WebDriverAgentLib-Target的签名信息。
+8.Test运行WebDriverAgent，测试重签名是否成功：
+8.1 Xcode上点击运行按钮，Build项目。
+8.2 点击Project-》Test项，运行测试case，验证运行是否正常。
+    （WebDriverAgentRunner程序入口：UITestingUITests.m）
+9.为混合型应用安装ios-webkit-debug-proxy：
+    brew install ios-webkit-debug-proxy
+(然后运行时配置 &ldquo;startIWDP&rdquo;:true，即可让iOS获取到WebView。等同于输入命令：
+    ios_webkit_debug_proxy -c udid_str:27753 -d
+)</p>
+<p>============================================================</p>
+<h2 id="ios_1">iOS真机运行：<a class="headerlink" href="#ios_1" title="Permanent link"></a></h2>
+<h5 id="native-app">Native App:<a class="headerlink" href="#native-app" title="Permanent link"></a></h5>
+<p>1.激活手机“开发者选项”：
+    插上手机，随便build一个项目（如WebDriverAgent），即可激活。
+2.Test运行WebDriverAgent应用，让手机上安装上该应用。
+3.配置Desired Capabilities：
+3.1 查询真机udid：
+    idevice_id -l
+    (自己6s的udid：eebf7f211d670fc1feb34b20c30a1b07581b18a2)
+3.2 查看手机上所有安装了的应用的bundleId：
+    ideviceinstaller -l
+    (微信Bundle ID：com.tencent.xin)
+3.3 查看xcodeOrgId和xcodeSigningId(不必要，若报错则需要添加)：
+    打开Xcode-》General标签页-》Signing-》Signing Cerificate-》鼠标hover查看xcodeOrgId全称
+    (我的&rdquo;xcodeOrgId&rdquo;: &ldquo;K3YBJJ6H2L&rdquo;和&rdquo;xcodeSigningId&rdquo;: &ldquo;iPhone Developer&rdquo;)
+启动微信的示例json串如下：
+{
+  &ldquo;platformName&rdquo;: &ldquo;ios&rdquo;,
+  &ldquo;deviceName&rdquo;: &ldquo;iPhone 6S&rdquo;,
+  &ldquo;automationName&rdquo;: &ldquo;XCuiTest&rdquo;,
+  &ldquo;platformVersion&rdquo;: &ldquo;10.3.3&rdquo;,
+  &ldquo;udid&rdquo;: &ldquo;eebf7f211d670fc1feb34b20c30a1b07581b18a2&rdquo;,
+  &ldquo;bundleId&rdquo;: &ldquo;com.che168.AutoTraderCloud&rdquo;
+}
+4 点击Start Session运行
+5.可通过Appium-Inspector工具抓元素坐标</p>
+<h5 id="hybrid-app">Hybrid App<a class="headerlink" href="#hybrid-app" title="Permanent link"></a></h5>
+<p>1.将电脑的Safari配置出“开发者选项”，并勾选“允许远程自动化”：
+网上教程：<a href="https://jingyan.baidu.com/article/9faa72318dfca5473d28cb61.html">https://jingyan.baidu.com/article/9faa72318dfca5473d28cb61.html</a>
+2.同上Native App安装步骤。
+3.若遇到H5内嵌页面，可使用电脑Safari确定元素坐标：
+    Safari菜单&ndash;》“开发”&ndash;》“任羿 的 iPhone 6S”&ndash;》选对应的网页地址</p>
+<p>============================================================</p>
+<p>其他：
+1.执行“ideviceinstaller -l”异常时的处理方法：
+执行一遍以下命令，重装一遍即可：
+    brew uninstall ios-webkit-debug-proxy -g
+    brew uninstall ideviceinstaller -g
+    brew uninstall libimobiledevice -g
+    brew install &ndash;HEAD libimobiledevice -g
+    brew install ideviceinstaller -g
+    brew install ios-webkit-debug-proxy
+    sudo chmod -R 777 /var/db/lockdown
+参考：<a href="https://testerhome.com/topics/7557">https://testerhome.com/topics/7557</a>
+和 <a href="http://blog.csdn.net/qq_30534535/article/details/52670219">http://blog.csdn.net/qq_30534535/article/details/52670219</a></p></article></body></html>

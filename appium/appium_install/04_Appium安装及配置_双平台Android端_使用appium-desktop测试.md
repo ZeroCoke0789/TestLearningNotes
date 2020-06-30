@@ -1,4 +1,4 @@
-# Appium安装_11_双平台_appium-desktop安装及Android端环境安装
+# 04_Appium安装及配置_双平台Android端_使用appium-desktop测试
 
 介绍在Windows电脑或Mac电脑上，若想使用appium-desktop进行自动化测试，在对Android端的安装及运行测试的过程。  
 注意：  

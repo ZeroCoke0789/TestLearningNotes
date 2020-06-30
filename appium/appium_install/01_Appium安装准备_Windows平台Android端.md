@@ -1,4 +1,4 @@
-# Appium安装_02_Mac平台_安装准备_Android端
+# 01_Appium安装准备_Windows平台Android端
 
 安装JDK、nodejs、Android开发环境
 
@@ -8,29 +8,17 @@
 
 ---
 
-## 一、安装JDK，并配置Java环境变量
+## 一、安装JDK，配置Java环境变量，获取Java运行环境
 
 百度即可，略
 
 环境变量：  
-export JAVA_HOME=JDK安装目录  
-export CLASSPATH=".:%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar" 
+JAVA_HOME=JDK安装目录  
+CLASSPATH=".;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar"  
 
 ---
 
-## 二、更新Homebrew（brew命令）
-
-因Mac自带Homebrew，因此只要更新即可，执行`brew update`即可。
-
-#### brew的更新及命令介绍：  
-1. `brew update`：更新brew  
-2. `brew install xxx`：安装xxx模块  
-3. `brew uninstall xxx`：卸载xxx模块  
-4. `brew upgrade xxx`：更新xxx模块版本    
-
----
-
-## 三、安装node，并配置npm
+## 二、安装node，获取npm包管理工具
 
 1. 官网下载node并安装：  
     从[nodejs官网](https://nodejs.org/en/)下载node，然后安装，即可获得node和npm。
@@ -42,7 +30,7 @@ export CLASSPATH=".:%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar"
 3. 升级npm版本到最新版本：  
     执行`npm i npm@latest -g`或`npm install npm@latest -g`或`npm install npm -g`
 
-#### npm命令介绍：  
+##### npm命令介绍：  
 
 1. `npm view <package> versions --json`：查看模块全部发布版本
 2. `npm install (-g) <package>`：全局/本地安装模块。  
@@ -65,9 +53,8 @@ export CLASSPATH=".:%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar"
     淘宝 NPM 镜像/cnpm网站：http://npm.taobao.org  
     cnpm安装模块：`cnpm install [name]`
 
+---
+
+## 三、安装Android开发环境的安装，获取adb服务
 
 
-# 其他：
-
-idb and idb-companion:
- https://swift.ctolib.com/facebook-idb.html

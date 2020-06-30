@@ -1,4 +1,4 @@
-# Appium安装_31_双平台_appium-server源码安装及Android端环境安装
+# 08_Appium安装及配置_双平台Android端_appium-server源码安装
 
 介绍在Windows电脑或Mac电脑上，若想通过源码安装appium-server并用其进行自动化测试，在对Android端的安装及运行测试的过程。  
 注意：  

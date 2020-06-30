@@ -1,4 +1,4 @@
-# Appium安装_32_Mac平台_appium-server源码安装及iOS端环境安装
+# 09_Appium安装及配置_Mac平台iOS端_appium-server源码安装
 
 介绍在Mac电脑上，若想通过源码安装appium-server并用其进行自动化测试，在对iOS端的安装及运行测试的过程。  
 注意：  

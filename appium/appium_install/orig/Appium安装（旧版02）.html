@@ -992,7 +992,34 @@ body .markdown-body
     page-break-after: avoid;
   }
 }
-</style><style>/*GitHub*/
+</style><script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script><script>MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: ".*|",
+    processClass: "arithmatex"
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  showProcessingMessages: false,
+  messageStyle: 'none'
+});
+</script><style>/*GitHub*/
 .codehilite {background-color:#fff;color:#333333;}
 .codehilite .hll {background-color:#ffffcc;}
 .codehilite .c{color:#999988;font-style:italic}
@@ -1055,7 +1082,7 @@ body .markdown-body
 .codehilite .vi{color:teal}
 .codehilite .il{color:#009999}
 .codehilite .gc{color:#999;background-color:#EAF2F5}
-</style><title>Appium安装（旧版）</title></head><body><article class="markdown-body"><h1 id="appium">Appium的安装：<a class="headerlink" href="#appium" title="Permanent link"></a></h1>
+</style><title>Appium安装（旧版02）</title></head><body><article class="markdown-body"><h1 id="appium">Appium的安装：<a class="headerlink" href="#appium" title="Permanent link"></a></h1>
 <div class="toc">
 <ul>
 <li><a href="#appium">Appium的安装：</a><ul>
@@ -1502,6 +1529,14 @@ brew install fbsimctl --HEAD
 2.同上Native App安装步骤。<br />
 3.若遇到H5内嵌页面，可使用电脑Safari确定元素坐标：<br />
     Safari菜单&ndash;》“开发”&ndash;》“任羿 的 iPhone 6S”&ndash;》选对应的网页地址  </p>
+<p>Hybrid App for Mac：</p>
+<p>1.HybridApp获取WebView调试H5:
+(1)需要安装ios-webkit-debug-proxy：
+    brew install ios-webkit-debug-proxy
+(2)运行时开启&rdquo;startIWDP&rdquo;属性：
+    &ldquo;startIWDP&rdquo;:true，
+(3)即可让iOS获取到WebView。
+(等同于“ios_webkit_debug_proxy -c udid_str:27753 -d”的启动服务命令)</p>
 <p>============================================================</p>
 <h2 id="_4">六、异常处理：<a class="headerlink" href="#_4" title="Permanent link"></a></h2>
 <h3 id="61-ideviceinstaller-l">6.1 执行“ideviceinstaller -l”异常时的处理方法：<a class="headerlink" href="#61-ideviceinstaller-l" title="Permanent link"></a></h3>

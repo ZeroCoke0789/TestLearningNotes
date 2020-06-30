@@ -1,110 +1,23 @@
-# Appium的安装：
+# 05_Appium安装及配置_Mac系统iPhone端_使用appium-desktop测试
 
-[TOC]
-
-## 一、基础命令准备：
-
-需要命令工具：Homebrew／node／npm
-
-##### * brew的更新及命令介绍：  
-1. `brew update`：更新brew  
-2. `brew install xxx`：安装xxx模块  
-3. `brew uninstall xxx`：卸载xxx 模块  
-4. `brew upgrade xxx`：更新xxx模块版本  
-
-##### * 安装node和npm：  
-1. 官网下载node并安装：  
-    从官网下载LTS版本，然后安装即可获得node和npm。需用`node -v`和`npm -v`验证。  
-2. 调整npm默认下载目录(避免安装时权限):  
-    执行`npm install xxx`时报checkPermissions问题：  
-    参考 https://docs.npmjs.com/getting-started/fixing-npm-permissions 文章的“Manually change npm’s default directory”方法，修改npm默认目录即可。  
-    (或者将`./node_modules`目录修改为777权限)
-3. 升级npm版本到最新版本：  
-    执行`npm i npm@latest -g`或`npm install npm@latest -g`或`npm install npm -g` 
-
-
-##### * npm命令介绍：  
-1. `npm view <package> versions --json`：查看模块全部发布版本
-2. `npm install (-g) <package>`：全局/本地安装模块。  
-* 全局安装(加-g) --》 模块会安装在npm默认目录下。  
-* 本地安装 --》 模块会安装当前目录下的node_modules目录下(./node_modules/xx)，如果当前没有node_modules目录，则会先创建生成。  
-3. `npm install (-g) <package>@<version>`：指定模块版本，全局/本地安装模块，如`npm install -g appium@1.9.1`。
-4. `npm list (-g)`: 查看所有全局/本地安装的模块。
-5. `npm uninstall (-g)<package>`：卸载全局/本地已安装的模块  
-6. `npm update (-g) <package>`：更新全局/本地模块    
-* 建议翻墙下载  
-* 或指定npm下载镜像和指定chromedriver下载镜像安装模块。  
-指定npm下载镜像：`--registry=https://registry.npm.taobao.org`  
-指定chromedriver下载镜像：`-–chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver`  
-* 不建议使用cnpm，因为cnpm有时容易添麻烦，但若想用可参考“https://npm.taobao.org”使用。  
-7. `npm cache clear --force`：慎用，可以清空NPM本地缓存。可用于对付使用相同版本号发布新版本代码的人。  
-* `npm cache verify`：验证缓存(同最新的)是否是一致有效的。
-6. `npm help <command>`：查看某条命令的详细帮助，例如`npm help install`。
-
-
-
-
-============================================================
-
-## 二、Appium Server的安装：
-
-##### 1.安装node和npm：
-见“一、准备工作”。  
-##### 2.npm安装appium： 
-    `npm install -g appium --registry=https://registry.npm.taobao.org`
-##### 3.npm安装appium client：
-    `npm install wd --registry=https://registry.npm.taobao.org` 
-##### 4.npm安装appium-doctor：
-    `npm install -g appium-doctor --registry=https://registry.npm.taobao.org`
-##### 5.检验appium环境：
-输入`appium-doctor`，验证appium环境是不是已配好、是否有问题。  
-##### 6.检验appium运行正常：
-输入`appium -v`，运行appium验证是否运行正常。  
-##### 7.安装时问题处理记录：  
-* 运行”npm install -g appium“时下载appium-chromedriver超时(下载不下来)：  
-【问题显示：】  
-npm ERR! appium-chromedriver@3.1.4 install: `node install-npm.js`  
-info Chromedriver Install Downloading https://chromedriver.storage.googleapis.com/2.33/chromedriver_mac64.zip...  
-RequestError: Error: connect ETIMEDOUT 172.217.160.112:443  
-...  
-npm ERR! code ELIFECYCLE  
-npm ERR! errno 1  
-npm ERR! appium-chromedriver@3.1.4 install: `node install-npm.js`  
-npm ERR! Exit status 1  
-npm ERR!  
-npm ERR! Failed at the appium-chromedriver@3.1.4 install script.  
-npm ERR! This is probably not a problem with npm. There is likely additional logging output above.  
-【对策：】  
-使用appium源码安装，或添加--chromedriver_cdnurl参数再运行安装：  
-`--chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver`
-
-* 下载 UiAutomator2 Server test APK v0.3.0 超时：  
-【问题显示：】  
-info UiAutomator2 downloading UiAutomator2 Server test APK v0.3.0 :   https://github.com/appium/appium-uiautomator2-server/releases/download/v0.3.0/appium-uiautomator2-server-debug-androidTest.apk  
-【对策：】  
-手动下载：记录下载链接和本地存放目录，直接翻墙去下载链接下载对应apk包，再放入本地存放目录即可。  
-
-
-============================================================
-
-## 三、Appium-Android端驱动安装：
-
-* [The UiAutomator2 Driver for Android](http://appium.io/docs/en/drivers/android-uiautomator2/) 
-* [The UiAutomator Driver for Android](http://appium.io/docs/en/drivers/android-uiautomator/) 
-* [The Selendroid Driver for Android](http://appium.io/docs/en/drivers/android-selendroid/)
+介绍在Mac电脑上，若想使用appium-desktop进行自动化测试，对iOS端安装并运行测试的过程。  
+注意：  
+1.此介绍只讲解Appium的安装过程，关于brew、npm等依赖不做介绍，想装请见《安装准备》文档。
 
 ---
 
-##### 1.安装appium-android-driver:   
-    npm install appium-android-driver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver 
-##### 2.安装appium-chromedriver(建议指定chromedriver镜像安装):  
-    npm install appium-chromedriver --registry=https://registry.npm.taobao.org --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
-##### 3.安装指定chromedriver版本的appium-chromedriver：
-    npm install appium-chromedriver --chromedriver_version="2.16"   --chromedriver_cdnurl=http://npm.taobao.org/mirrors/chromedriver
+[TOC]
 
+---
 
+## 一、Appium-desktop的安装：
 
+    https://github.com/appium/appium-desktop/releases/
+    打开上面链接，下载最新的appium-desktop安装包，然后按要求一步步安装即可。
 
+## 二、iOS端Appium环境运行测试：
+
+（以下略，还未修改完）
 ============================================================
 
 ## 四、Appium-iOS端驱动安装： 
@@ -325,24 +238,6 @@ cd进入：
 2.同上Native App安装步骤。  
 3.若遇到H5内嵌页面，可使用电脑Safari确定元素坐标：  
     Safari菜单--》“开发”--》“任羿 的 iPhone 6S”--》选对应的网页地址  
-
-
-
-
-============================================================
-
-## 六、异常处理：  
-### 6.1 执行“ideviceinstaller -l”异常时的处理方法：  
-执行一遍以下命令，重装一遍即可：  
-    brew uninstall ios-webkit-debug-proxy -g  
-    brew uninstall ideviceinstaller -g  
-    brew uninstall libimobiledevice -g  
-    brew install --HEAD libimobiledevice -g  
-    brew install ideviceinstaller -g  
-    brew install ios-webkit-debug-proxy  
-    sudo chmod -R 777 /var/db/lockdown  
-参考：https://testerhome.com/topics/7557
-和 http://blog.csdn.net/qq_30534535/article/details/52670219  
 
 
 
